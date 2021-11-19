@@ -37,7 +37,7 @@ public class Principal {
 		
 		
 		
-		crearPersonas();
+//		crearPersonas();//por defecto
 
 		
 		 /* Registro de el unico usuario administrador*/
