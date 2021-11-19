@@ -1,10 +1,14 @@
 package ar.edu.unju.escmi.poo.principal;
 
+import java.util.Scanner;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
+import ar.edu.unju.escmi.poo.dominio.AdminDeRestaurante;
 import ar.edu.unju.escmi.poo.dominio.ClienteP;
+import ar.edu.unju.escmi.poo.dominio.Salon;
 
 public class Principal {
 	public static EntityManagerFactory emf;
@@ -20,6 +24,92 @@ public class Principal {
 		manager.persist(clienteP1);
 		manager.getTransaction().commit();
 
+		AdminDeRestaurante administrador = new AdminDeRestaurante("jjuan","12345");
+		Scanner sc = new Scanner(System.in);
+		String nombre, contra;
+		boolean ingreso=false;
+		Salon salon1 = new Salon(1,20);
+		Salon salon2 = new Salon(2,10);
+		
+		
+		
+		
+		
+		
+		
+		/* Registro de el unico usuario administrador */
+		while (ingreso == false) {
+			System.out.println("-----Inicio de sesion-----");
+			System.out.println("Nombre de usuario:");
+			nombre = sc.next();
+			System.out.println("Contrasenia:");
+			contra = sc.next();
+			if(administrador.getUser().equals(nombre)) {
+				System.out.println("Usuario encontrado");
+				if(administrador.getPassword().equals(contra)) {
+					System.out.println("Contraseña correcta");
+					ingreso=true;
+				}
+				else {
+					System.out.println("Contraseña incorrecta");
+				}
+			}
+			else {
+				System.out.println("Usuario no encontrado");
+			}
+		}
+		System.out.println("Listo el pollo");
+		/*Menu principal*/
+		System.out.println("- Alta de Mozo\r\n"
+				+"- Listado de Mozos.\r\n"
+				+"- Consultar disponibilidad de mesas según salón.\r\n"
+				+ "- Consultar mesas ocupadas mostrando la cantidad de comensales.\r\n"
+				+ "- Alta de una reserva.\r\n"
+				+ "- Realizar la búsqueda de una reserva para realizar la modificación de total a pagar (significa\r\n"
+				+ "que finaliza la reserva). El estado se debe actualizar de forma automática (no se ingresa).\r\n"
+				+ "Las mesas deben quedar liberadas para una próxima reserva.\r\n"
+				+ "- Consultar los datos del cliente ingresando cuil o dni.\r\n"
+				+ "- Eliminar una reserva ingresando el id.\r\n"
+				+ "- Listar todas las reservas."
+				);
+
+		int a = sc.nextInt();
+
+		switch (a) {
+
+		case 1:
+	
+			break;
+		case 2:
+			
+			break;
+		case 3:
+			
+			break;
+		case 4:
+			
+			break;
+		case 5:
+			
+			break;
+		case 6:
+			
+			break;
+		case 7:
+			
+			break;
+		case 8:
+			
+			break;
+		case 9:
+			
+			break;
+			
+
+		
+		}
+		
+		
 		
 	}
 
