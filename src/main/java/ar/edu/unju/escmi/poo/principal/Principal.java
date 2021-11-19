@@ -11,7 +11,7 @@ public class Principal {
 	public static EntityManager manager;
 	
 	public static void main(String[] args) {
-		  
+		  //comentario
 		
 		emf=Persistence.createEntityManagerFactory("TestPersistence");
 		manager = emf.createEntityManager();
