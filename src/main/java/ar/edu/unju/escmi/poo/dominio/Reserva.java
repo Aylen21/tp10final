@@ -29,7 +29,7 @@ public class Reserva {
 	@ManyToOne
 	@JoinColumn(name = "dniM")
 	private Mozo mozo;
-	@OneToMany
+	@OneToMany(mappedBy = "reserva")
 	private List<Mesa> mesa;
 	private int cantidadComensales;
 	private LocalDate fechaR;
@@ -100,8 +100,11 @@ public class Reserva {
 		this.total = total;
 	}
 
-	public Reserva() {
-
+	@Override
+	public String toString() {
+		return "Reserva [idR=" + idR + ", cliente=" + cliente + ", mozo=" + mozo + ", mesa=" + mesa
+				+ ", cantidadComensales=" + cantidadComensales + ", fechaR=" + fechaR + ", horaR=" + horaR + ", total="
+				+ total + "]";
 	}
 
 	public Reserva(Long idR, Persona cliente, Mozo mozo, List<Mesa> mesa, int cantidadComensales, LocalDate fechaR,
@@ -117,11 +120,9 @@ public class Reserva {
 		this.total = total;
 	}
 
-	@Override
-	public String toString() {
-		return "Reserva [idR=" + idR + ", cliente=" + cliente + ", mozo=" + mozo + ", mesa=" + mesa
-				+ ", cantidadComensales=" + cantidadComensales + ", fechaR=" + fechaR + ", horaR=" + horaR + ", total="
-				+ total + "]";
+	public Reserva() {
+		super();
+		// TODO Auto-generated constructor stub
 	}
 
 }

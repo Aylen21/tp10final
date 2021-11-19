@@ -23,6 +23,9 @@ public class Mesa {
 	@ManyToOne
 	@JoinColumn(name = "nroDeSalon")
 	private Salon salon;
+	@ManyToOne
+	@JoinColumn(name = "idR")
+	private Reserva reserva;
 
 	public Long getIdMesa() {
 		return idMesa;
@@ -30,10 +33,6 @@ public class Mesa {
 
 	public void setIdMesa(Long idMesa) {
 		this.idMesa = idMesa;
-	}
-
-	public static int getCantidadPersonas() {
-		return CAPACIDAD_PERSONAS;
 	}
 
 	public String getEstado() {
@@ -44,18 +43,42 @@ public class Mesa {
 		Estado = estado;
 	}
 
-	public Mesa() {
-
+	public Salon getSalon() {
+		return salon;
 	}
 
-	public Mesa(String estado) {
-		super();
-		Estado = estado;
+	public void setSalon(Salon salon) {
+		this.salon = salon;
+	}
+
+	public Reserva getReserva() {
+		return reserva;
+	}
+
+	public void setReserva(Reserva reserva) {
+		this.reserva = reserva;
+	}
+
+	public static int getCapacidadPersonas() {
+		return CAPACIDAD_PERSONAS;
 	}
 
 	@Override
 	public String toString() {
-		return "Mesa [idMesa=" + idMesa + ", Estado=" + Estado + "]";
+		return "Mesa [idMesa=" + idMesa + ", Estado=" + Estado + ", salon=" + salon + ", reserva=" + reserva + "]";
+	}
+
+	public Mesa(Long idMesa, String estado, Salon salon, Reserva reserva) {
+		super();
+		this.idMesa = idMesa;
+		Estado = estado;
+		this.salon = salon;
+		this.reserva = reserva;
+	}
+
+	public Mesa() {
+		super();
+		// TODO Auto-generated constructor stub
 	}
 
 }

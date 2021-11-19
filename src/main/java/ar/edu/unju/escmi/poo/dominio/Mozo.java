@@ -6,7 +6,7 @@ import javax.persistence.Entity;
 @Entity
 @DiscriminatorValue(value="Mozos")
 public class Mozo extends Persona {
-
+	
 	private long dniM;
 
 	public long getDniM() {
