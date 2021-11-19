@@ -60,24 +60,24 @@ public class Principal {
 		}
 		System.out.println("Listo el pollo");
 		/*Menu principal*/
-		System.out.println("- Alta de Mozo\r\n"
-				+"- Listado de Mozos.\r\n"
-				+"- Consultar disponibilidad de mesas según salón.\r\n"
-				+ "- Consultar mesas ocupadas mostrando la cantidad de comensales.\r\n"
-				+ "- Alta de una reserva.\r\n"
-				+ "- Realizar la búsqueda de una reserva para realizar la modificación de total a pagar (significa\r\n"
-				+ "que finaliza la reserva). El estado se debe actualizar de forma automática (no se ingresa).\r\n"
-				+ "Las mesas deben quedar liberadas para una próxima reserva.\r\n"
-				+ "- Consultar los datos del cliente ingresando cuil o dni.\r\n"
-				+ "- Eliminar una reserva ingresando el id.\r\n"
-				+ "- Listar todas las reservas."
+		System.out.println("1 - Alta de Mozo\r\n"
+				+"2 - Listado de Mozos.\r\n"
+				+"3 - Consultar disponibilidad de mesas según salón.\r\n"
+				+ "4 - Consultar mesas ocupadas mostrando la cantidad de comensales.\r\n"
+				+ "5 - Alta de una reserva.\r\n"
+				+ "6 - Realizar la búsqueda de una reserva para realizar la modificación de total a pagar (significa que finaliza la reserva).\r\n"
+				+ "7 - Consultar los datos del cliente ingresando cuil o dni.\r\n"
+				+ "8 - Eliminar una reserva ingresando el id.\r\n"
+				+ "9 - Listar todas las reservas."
 				);
 
 		int a = sc.nextInt();
 
 		switch (a) {
-
+		
 		case 1:
+			/*Listado de Mozos*/
+			
 	
 			break;
 		case 2:
@@ -90,13 +90,23 @@ public class Principal {
 			
 			break;
 		case 5:
+			/*Dar de alta reserva, precisa de definir si el cliente ya estaba registrado con anterioridad*/
+			System.out.println("Ingrese el DNI o CUIT del cliente que va a realizar la reserva");
+			long identificador;
+			identificador= sc.nextLong();
+					
+			
+			
+			
 			
 			break;
 		case 6:
 			
 			break;
 		case 7:
-			
+			System.out.println("Ingrese el DNI o CUIT del cliente a buscar");
+			long iden;
+			iden= sc.nextLong();
 			break;
 		case 8:
 			
