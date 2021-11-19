@@ -15,9 +15,9 @@ public class Salon {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-    private Long id;
+	 private int nroDeSalon;
 	private int capacidadMesas;
-    private int nroDeSalon;
+   
 	
 	
 	public int getCapacidadMesas() {
@@ -29,14 +29,7 @@ public class Salon {
 	}
 
 
-	public Long getId() {
-		return id;
-	}
-
-	public void setIdS(Long id) {
-		this.id = id;
-	}
-
+	
 
 	public int getNroDeSalon() {
 		return nroDeSalon;
@@ -51,16 +44,16 @@ public class Salon {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Salon(Long id, int capacidadMesas, int nroDeSalon) {
+	public Salon( int capacidadMesas, int nroDeSalon) {
 		super();
-		this.id = id;
+	
 		this.capacidadMesas = capacidadMesas;
 		this.nroDeSalon = nroDeSalon;
 	}
 
 	@Override
 	public String toString() {
-		return "Salon [id=" + id + ", capacidadMesas=" + capacidadMesas + ", nroDeSalon=" + nroDeSalon + "]";
+		return "Salon [capacidadMesas=" + capacidadMesas + ", nroDeSalon=" + nroDeSalon + "]";
 	}
 
 	
