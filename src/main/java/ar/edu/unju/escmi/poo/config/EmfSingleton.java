@@ -7,7 +7,7 @@ import javax.persistence.Persistence;
 public class EmfSingleton {
 	
 	private static EmfSingleton miInstancia = new EmfSingleton();
-	static private final String PERSISTENCE_UNIT_NAME = "PersistenceHerencia1";
+	static private final String PERSISTENCE_UNIT_NAME = "TestPersistence";
 	private EntityManagerFactory emf = null;
 
 	public static EmfSingleton getInstance() {

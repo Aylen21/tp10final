@@ -11,5 +11,8 @@ public interface IPersonaDao {
 	public void listarMozos();
 
 	public void consultarDatosCliente();
+	
+	public int obtenerPersonas();
+	 
 
 }

@@ -1,9 +1,13 @@
 package ar.edu.unju.esmi.poo.imp;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 
 import ar.edu.unju.escmi.poo.config.EmfSingleton;
 import ar.edu.unju.escmi.poo.dao.IPersonaDao;
+import ar.edu.unju.escmi.poo.dominio.AdminDeRestaurante;
 import ar.edu.unju.escmi.poo.dominio.Persona;
 
 public class PersonaDaoImp implements IPersonaDao {
@@ -22,7 +26,9 @@ public class PersonaDaoImp implements IPersonaDao {
 	@Override
 	public void darDeAltaCLiente(Persona cliente) {
 		// TODO Auto-generated method stub
-
+		manager.getTransaction().begin();
+		manager.persist(cliente);
+		manager.getTransaction().commit();
 	}
 
 	@Override
@@ -36,5 +42,21 @@ public class PersonaDaoImp implements IPersonaDao {
 		// TODO Auto-generated method stub
 
 	}
+
+	@Override
+	public int obtenerPersonas() {
+		// TODO Auto-generated method stub
+        Query query = manager.createQuery("SELECT p FROM Persona p ");
+		List<Persona> personas = query.getResultList();
+		if(personas.isEmpty()==false) {
+			return 1;
+		}else {
+			return 0;			
+		}
+
+
+	}
+
+	
 
 }
