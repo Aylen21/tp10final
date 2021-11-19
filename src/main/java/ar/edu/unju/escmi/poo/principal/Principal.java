@@ -20,6 +20,7 @@ public class Principal {
 		manager.persist(clienteP1);
 		manager.getTransaction().commit();
 
+		
 	}
 
 }
