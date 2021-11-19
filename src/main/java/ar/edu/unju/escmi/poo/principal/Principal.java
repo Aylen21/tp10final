@@ -6,9 +6,12 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
+import ar.edu.unju.escmi.poo.dao.IPersonaDao;
 import ar.edu.unju.escmi.poo.dominio.AdminDeRestaurante;
 import ar.edu.unju.escmi.poo.dominio.ClienteP;
+import ar.edu.unju.escmi.poo.dominio.Mozo;
 import ar.edu.unju.escmi.poo.dominio.Salon;
+import ar.edu.unju.escmi.poo.imp.PersonaDaoImp;
 
 public class Principal {
 	public static EntityManagerFactory emf;
@@ -76,7 +79,20 @@ public class Principal {
 		switch (a) {
 		
 		case 1:
-			/*Listado de Mozos*/
+			System.out.println("Carga de datos de Mozo:");
+			Mozo mozo1 = new Mozo();
+			System.out.println("Ingrese DNI del mozo");
+			mozo1.setDniM(sc.nextLong());
+			System.out.println("Ingrse nombre de mozo");
+			mozo1.setNombre(sc.next());
+			System.out.println("Ingrese email de mozo");
+			mozo1.setEmail(sc.next());
+			System.out.println("Ingrese telefono de mozo");
+			mozo1.setTelefono(sc.nextLong());
+			// enviar esto, para que PersonaDaoImp lo use
+			IPersonaDao personaDao = new PersonaDaoImp();
+			personaDao.darDeAltaMozo(mozo1);
+			System.out.println("Mozo cargado exitosamente");
 			
 	
 			break;
