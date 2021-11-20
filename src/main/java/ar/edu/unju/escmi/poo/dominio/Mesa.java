@@ -21,7 +21,7 @@ public class Mesa {
 	private static final int CAPACIDAD_PERSONAS = 4;
 	private String Estado;
 	@ManyToOne
-	@JoinColumn(name = "nroDeSalon")
+	@JoinColumn(name = "nroDeSalon")//dueño de relación
 	private Salon salon;
 
 	public Long getIdMesa() {
@@ -44,6 +44,18 @@ public class Mesa {
 		Estado = estado;
 	}
 
+	public Salon getSalon() {
+		return salon;
+	}
+
+	public void setSalon(Salon salon) {
+		this.salon = salon;
+	}
+
+	public static int getCapacidadPersonas() {
+		return CAPACIDAD_PERSONAS;
+	}
+
 	public Mesa() {
 
 	}
@@ -55,7 +67,8 @@ public class Mesa {
 
 	@Override
 	public String toString() {
-		return "Mesa [idMesa=" + idMesa + ", Estado=" + Estado + "]";
+		return "Mesa [idMesa=" + idMesa + ", Estado=" + Estado + ", salon=" + salon + "]";
 	}
+
 
 }

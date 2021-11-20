@@ -1,7 +1,7 @@
 package ar.edu.unju.escmi.poo.dao;
 
 public interface IAdmiDeRestauranteDao {
-	public void consultarMesas();
+	public int consultarMesas(int numSalon);
 
 	public void consultarMesasOcup();
 
