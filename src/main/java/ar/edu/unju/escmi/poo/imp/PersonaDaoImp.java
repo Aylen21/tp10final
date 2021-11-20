@@ -8,14 +8,7 @@ public class PersonaDaoImp implements IPersonaDao {
 
 	private static EntityManager manager = EmfSingleton.getInstance().getEmf().createEntityManager();
 
-	@Override
-	public void darDeAltaMozo(Persona mozo) {
-		// TODO Auto-generated method stub
-		manager.getTransaction().begin();
-		manager.persist(mozo);
-		manager.getTransaction().commit();
-		
-	}
+	
 
 	@Override
 	public void darDeAltaCLiente(Persona cliente) {

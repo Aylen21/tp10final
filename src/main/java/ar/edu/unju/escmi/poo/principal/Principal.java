@@ -9,14 +9,16 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
 import ar.edu.unju.escmi.poo.dao.IAdmiDeRestauranteDao;
-import ar.edu.unju.escmi.poo.dao.IPersonaDao;
+import ar.edu.unju.escmi.poo.dao.IMozoDao;
 import ar.edu.unju.escmi.poo.dominio.AdminDeRestaurante;
 import ar.edu.unju.escmi.poo.dominio.ClienteP;
 import ar.edu.unju.escmi.poo.dominio.Mesa;
 import ar.edu.unju.escmi.poo.dominio.Mozo;
 import ar.edu.unju.escmi.poo.dominio.Salon;
 import ar.edu.unju.escmi.poo.imp.AdmiDeRestauranteDaoImp;
-import ar.edu.unju.escmi.poo.imp.PersonaDaoImp;
+import ar.edu.unju.escmi.poo.imp.MozoDaoImp;
+
+
 
 public class Principal {
 	public static EntityManagerFactory emf;
@@ -146,8 +148,8 @@ public class Principal {
 			System.out.println("Ingrese telefono de mozo");
 			mozo1.setTelefono(sc.nextLong());
 			// enviar esto, para que PersonaDaoImp lo use
-			IPersonaDao personaDao = new PersonaDaoImp();
-			personaDao.darDeAltaMozo(mozo1);
+			IMozoDao mozoDao = new MozoDaoImp();
+			mozoDao.darDeAltaMozo(mozo1);
 			System.out.println("Mozo cargado exitosamente");
 			
 	
@@ -172,8 +174,7 @@ public class Principal {
 			System.out.println("Ingrese el DNI o CUIT del cliente que va a realizar la reserva");
 			long identificador;
 			identificador= sc.nextLong();
-					
-			
+
 			
 			
 			
