@@ -1,16 +1,21 @@
 package ar.edu.unju.escmi.poo.principal;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
+import ar.edu.unju.escmi.poo.dao.IAdmiDeRestauranteDao;
 import ar.edu.unju.escmi.poo.dao.IPersonaDao;
 import ar.edu.unju.escmi.poo.dominio.AdminDeRestaurante;
 import ar.edu.unju.escmi.poo.dominio.ClienteP;
+import ar.edu.unju.escmi.poo.dominio.Mesa;
 import ar.edu.unju.escmi.poo.dominio.Mozo;
 import ar.edu.unju.escmi.poo.dominio.Salon;
+import ar.edu.unju.escmi.poo.imp.AdmiDeRestauranteDaoImp;
 import ar.edu.unju.escmi.poo.imp.PersonaDaoImp;
 
 public class Principal {
@@ -31,10 +36,61 @@ public class Principal {
 		Scanner sc = new Scanner(System.in);
 		String nombre, contra;
 		boolean ingreso=false;
-		Salon salon1 = new Salon(1,20);
-		Salon salon2 = new Salon(2,10);
+		
+		//cargamos mesas y salones
+		Mesa mesa=new Mesa();
+		List<Mesa> mesas1=new ArrayList<Mesa>(); //creando mesas
+		List<Mesa> mesas2=new ArrayList<Mesa>();
+		
+		Salon salon1 = new Salon(1,20,mesas1);
+		Salon salon2 = new Salon(2,10,mesas2);
 		
 		
+		manager.getTransaction().begin();
+//		salon1.setMesas(mesas1);
+		manager.persist(salon1);
+		manager.getTransaction().commit();
+		
+		manager.getTransaction().begin();
+//		salon2.setMesas(mesas2);
+		manager.persist(salon2);
+		manager.getTransaction().commit();
+		
+		mesas1=cargarMesas1(salon1);//cargando mesas
+		mesas2=cargarMesas2(salon2);
+		
+	    
+
+	
+		
+		
+		
+		
+		//cargando salon en las mesas
+	/*for (int k=0;k<mesas1.size();k++) {
+		mesas1.get(k).setSalon(salon1);
+		manager.getTransaction().begin();
+		manager.persist(mesas1.get(k));
+		manager.getTransaction().commit();
+	}
+	for (int j=0;j<mesas2.size();j++) {
+		mesas1.get(j).setSalon(salon2);
+		manager.getTransaction().begin();
+		manager.persist(mesas2.get(j));
+		manager.getTransaction().commit();
+	}
+		*/
+	
+	 
+	//
+		
+		
+		
+		
+
+
+		
+		//
 		
 		
 		
@@ -100,6 +156,12 @@ public class Principal {
 			
 			break;
 		case 3:
+			IAdmiDeRestauranteDao admiDao= new AdmiDeRestauranteDaoImp();
+			System.out.println("Ingrese numero de salon");
+			int numSalon=sc.nextInt();//debe ser 1 o 2
+			admiDao.consultarMesas(numSalon);
+			
+			//ahora deviulve cuantas mesas tiene disponible el salon
 			
 			break;
 		case 4:
@@ -137,6 +199,41 @@ public class Principal {
 		
 		
 		
+	}
+	
+	
+	
+	public static List<Mesa> cargarMesas1(Salon salon1) {
+	
+		List<Mesa> mesas1=new ArrayList<Mesa>();
+		
+		for(int i=0;i<20;i++) {//agregando 20 mesas a la lista
+			Mesa mesa=new Mesa();//creando una mesa
+			mesa.setEstado("desocupada");
+			mesa.setSalon(salon1);
+			mesas1.add(mesa);//agregando la mesa
+			manager.getTransaction().begin();
+			manager.persist(mesa);
+			manager.getTransaction().commit();
+
+		}
+		return mesas1;
+	}
+	public static List<Mesa> cargarMesas2(Salon salon2){
+		
+		List<Mesa> mesas2=new ArrayList<Mesa>();
+		
+		for(int i=0;i<10;i++) {//agregando 10 mesas a la lista
+			Mesa mesa=new Mesa();//creando una mesa
+			mesa.setEstado("desocupada");
+			mesa.setSalon(salon2);
+			mesas2.add(mesa);//agregando la mesa
+			manager.getTransaction().begin();
+			manager.persist(mesa);
+			manager.getTransaction().commit();
+
+		}
+		return mesas2;
 	}
 
 }

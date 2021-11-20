@@ -1,13 +1,26 @@
 package ar.edu.unju.escmi.poo.imp;
 
+import java.util.List;
+
+import javax.persistence.EntityManager;
+
+import ar.edu.unju.escmi.poo.config.EmfSingleton;
 import ar.edu.unju.escmi.poo.dao.IAdmiDeRestauranteDao;
+import ar.edu.unju.escmi.poo.dominio.Mesa;
+
+
 
 public class AdmiDeRestauranteDaoImp implements IAdmiDeRestauranteDao {
 
+	private static EntityManager manager = EmfSingleton.getInstance().getEmf().createEntityManager();
+	
 	@Override
-	public void consultarMesas() {
+	public int consultarMesas(int numSalon) {
 		// TODO Auto-generated method stub
 		
+		@SuppressWarnings("unchecked")
+		List<Mesa> empleados = (List<Mesa>) manager.createQuery("SELECT e FROM Empleado e").getResultList();
+		return 0;
 	}
 
 	@Override
