@@ -10,13 +10,19 @@ import javax.persistence.Persistence;
 
 import ar.edu.unju.escmi.poo.dao.IAdmiDeRestauranteDao;
 import ar.edu.unju.escmi.poo.dao.IMozoDao;
+import ar.edu.unju.escmi.poo.dao.IPersonaDao;
 import ar.edu.unju.escmi.poo.dominio.AdminDeRestaurante;
+import ar.edu.unju.escmi.poo.dominio.ClienteAT;
 import ar.edu.unju.escmi.poo.dominio.ClienteP;
 import ar.edu.unju.escmi.poo.dominio.Mesa;
 import ar.edu.unju.escmi.poo.dominio.Mozo;
+import ar.edu.unju.escmi.poo.dominio.Persona;
 import ar.edu.unju.escmi.poo.dominio.Salon;
 import ar.edu.unju.escmi.poo.imp.AdmiDeRestauranteDaoImp;
 import ar.edu.unju.escmi.poo.imp.MozoDaoImp;
+import ar.edu.unju.escmi.poo.imp.PersonaDaoImp;
+
+
 
 
 
@@ -27,12 +33,14 @@ public class Principal {
 	public static void main(String[] args) {
 		  //comentario
 		
+		IPersonaDao persDao = new PersonaDaoImp();
 		emf=Persistence.createEntityManagerFactory("TestPersistence");
 		manager = emf.createEntityManager();
 		ClienteP clienteP1 = new ClienteP("Juan","Juarez",123,456);
 		manager.getTransaction().begin();
 		manager.persist(clienteP1);
 		manager.getTransaction().commit();
+		
 
 		AdminDeRestaurante administrador = new AdminDeRestaurante("jjuan","12345");
 		Scanner sc = new Scanner(System.in);
@@ -171,13 +179,77 @@ public class Principal {
 			break;
 		case 5:
 			/*Dar de alta reserva, precisa de definir si el cliente ya estaba registrado con anterioridad*/
-			System.out.println("Ingrese el DNI o CUIT del cliente que va a realizar la reserva");
-			long identificador;
-			identificador= sc.nextLong();
+			
+			System.out.println("El cliente a buscar es de tipo agencia de turismo(A) o  particular:(P)");
+			String identificador = sc.next();
+			String A = "A";
+			String P = "P";
+			
+			if(identificador.equals(A)) {
+				System.out.println("Ingrese el cuit del cliente agencia de turismo");
+				long cuit = sc.nextLong();
+			    Persona clienteAEncontrado =  persDao.obtenerClienteA(cuit);
+			    System.out.println("1");
+			    if( clienteAEncontrado  != null) {
+					System.out.println(clienteAEncontrado);
+					System.out.println("2");
+				}
+			    
+			    else {
+					System.out.println("No se encontró ClienteAgencia con ese número de cuit");
 
-			
-			
-			
+					/*System.out.println("Ingrese los datos del cliente para hacer la reserva:");
+					ClienteAT clienteA1 = new ClienteAT();
+					System.out.println("Ingrese DNI del clienteAT");
+					clienteA1.setCuit(sc.nextLong());
+					System.out.println("Ingrse nombre de clienteAT");
+					clienteA1.setNombre(sc.next());
+					System.out.println("Ingrese email de clienteAT");
+					clienteA1.setEmail(sc.next());
+					System.out.println("Ingrese telefono de clienteAT");
+					clienteA1.setTelefono(sc.nextLong());
+					// enviar esto, para que PersonaDaoImp lo use
+					
+				    persDao.darDeAltaCLiente(clienteA1);
+					System.out.println("ClienteAT cargado exitosamente");
+					*/
+				}
+			}
+			else  
+			{
+				
+				if(identificador.equals(P)) {
+					
+					System.out.println("Ingrese el dni del cliente particular");
+					long dni = sc.nextLong();
+				    Persona clientePEncontrado =  persDao.obtenerClienteP(dni);
+				    if( clientePEncontrado != null) {
+						System.out.println( clientePEncontrado );
+					
+					
+				}
+				
+				else {
+					
+					/*System.out.println("El cliente particular no existe");
+					System.out.println("Ingrese los datos del cliente para hacer la reserva:");
+					ClienteP clienteP = new ClienteP();
+					System.out.println("Ingrese DNI del clienteAT");
+					clienteP.setDni(sc.nextLong());
+					System.out.println("Ingrse nombre de clienteAT");
+					clienteP.setNombre(sc.next());
+					System.out.println("Ingrese email de clienteAT");
+					clienteP.setEmail(sc.next());
+					System.out.println("Ingrese telefono de clienteAT");
+					clienteP.setTelefono(sc.nextLong());
+					// enviar esto, para que PersonaDaoImp lo use
+					
+				    persDao.darDeAltaCLiente(clienteP);
+					System.out.println("ClienteP cargado exitosamente");
+					*/
+				}
+			}
+			}
 			break;
 		case 6:
 			

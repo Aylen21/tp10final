@@ -1,8 +1,13 @@
 package ar.edu.unju.escmi.poo.imp;
+import java.util.List;
+
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
+
 import ar.edu.unju.escmi.poo.config.EmfSingleton;
 import ar.edu.unju.escmi.poo.dao.IPersonaDao;
 import ar.edu.unju.escmi.poo.dominio.Persona;
+
 
 public class PersonaDaoImp implements IPersonaDao {
 
@@ -18,24 +23,60 @@ public class PersonaDaoImp implements IPersonaDao {
 		manager.getTransaction().commit();
 	}
 
-	@Override
-	public void listarMozos() {
-		// TODO Auto-generated method stub
 
-	}
 
 	@Override
 	public void consultarDatosCliente() {
 		// TODO Auto-generated method stub
-
+		
 	}
+
+
 
 	@Override
-	public int obtenerPersonas() {
+	public int obtenerPersona() {
 		// TODO Auto-generated method stub
-		//devolver si hay personas cargadas, si las hay, no cargar por defecto
 		return 0;
 	}
+
+
+
+	@Override
+	public List<Persona> obtenerClientesAgenciaDeTurismo() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+
+	@Override
+	public Persona obtenerClienteP(long dni) {
+		Query query = manager.createQuery("SELECT e FROM Persona e " + "WHERE e.dni = :dni");
+		query.setParameter("dni", dni);
+		Persona cliente = (Persona)query.getSingleResult();
+		return cliente;
+	}
+
+
+
+	@Override
+	public List<Persona> obtenerClientesParticulares() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+
+	@Override
+	public Persona obtenerClienteA(long cuit) {
+		Query query = manager.createQuery("SELECT e FROM Persona e " + "WHERE e.cuit = :cuit");
+		query.setParameter("cuit", cuit);
+		Persona cliente = (Persona)query.getSingleResult();
+		return cliente;
+	}
+
+
+	
 
 	/*@Override
 	public int obtenerPersonas() {

@@ -6,6 +6,6 @@ import ar.edu.unju.escmi.poo.dominio.Mozo;
 public interface IMozoDao {
 
 	public void darDeAltaMozo(Mozo mozo);
-	
+	public void listarMozos();
 	
 }

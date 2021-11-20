@@ -17,6 +17,16 @@ public class ClienteP extends Persona{
 		this.dni = dni;
 	}
 
+	
+	
+
+	
+	public ClienteP() {
+		
+	}
+
+	
+
 	public ClienteP(String nombre, String email, long telefono, long dni) {
 		super(nombre, email, telefono);
 		this.dni = dni;
@@ -27,6 +37,8 @@ public class ClienteP extends Persona{
 		return "ClienteP [dni=" + dni + ", getId()=" + getId() + ", getNombre()=" + getNombre() + ", getEmail()="
 				+ getEmail() + ", getTelefono()=" + getTelefono() + "]";
 	}
+
+	
 
 	
 	

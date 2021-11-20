@@ -16,6 +16,12 @@ public class MozoDaoImp implements IMozoDao{
 		manager.getTransaction().commit();
 	}
 
+	@Override
+	public void listarMozos() {
+		// TODO Auto-generated method stub
+		
+	}
+
 	
 	
 	
