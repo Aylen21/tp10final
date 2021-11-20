@@ -247,6 +247,7 @@ public class Principal {
 				    persDao.darDeAltaCLiente(clienteP);
 					System.out.println("ClienteP cargado exitosamente");
 					*/
+					//ggg
 				}
 			}
 			}
