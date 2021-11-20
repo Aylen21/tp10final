@@ -16,13 +16,13 @@ public class AdmiDeRestauranteDaoImp implements IAdmiDeRestauranteDao {
 	
 	@Override
 	public int consultarMesas(int numSalon) {
-		// TODO Auto-generated method stub
+	// TODO Auto-generated method stub
 		
-		@SuppressWarnings("unchecked")
-		List<Mesa> empleados = (List<Mesa>) manager.createQuery("SELECT e FROM Empleado e").getResultList();
+		//@SuppressWarnings("unchecked")
+		//List<Mesa> empleados = (List<Mesa>) manager.createQuery("SELECT e FROM Empleado e").getResultList();
 		return 0;
+	
 	}
-
 	@Override
 	public void consultarMesasOcup() {
 		// TODO Auto-generated method stub
