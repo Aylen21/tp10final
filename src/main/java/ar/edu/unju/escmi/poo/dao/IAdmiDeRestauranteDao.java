@@ -1,11 +1,13 @@
 package ar.edu.unju.escmi.poo.dao;
 
+import ar.edu.unju.escmi.poo.dominio.Reserva;
+
 public interface IAdmiDeRestauranteDao {
 	public int consultarMesas(int numSalon);
 
 	public void consultarMesasOcup();
 
-	public void darAltaReserva();
+	public void darAltaReserva(Reserva reserva);
 
 	public void buscarActualizarReserva();
 
