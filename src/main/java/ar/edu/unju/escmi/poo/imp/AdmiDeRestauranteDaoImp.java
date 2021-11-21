@@ -7,6 +7,7 @@ import javax.persistence.EntityManager;
 import ar.edu.unju.escmi.poo.config.EmfSingleton;
 import ar.edu.unju.escmi.poo.dao.IAdmiDeRestauranteDao;
 import ar.edu.unju.escmi.poo.dominio.Mesa;
+import ar.edu.unju.escmi.poo.dominio.Reserva;
 
 
 
@@ -30,8 +31,10 @@ public class AdmiDeRestauranteDaoImp implements IAdmiDeRestauranteDao {
 	}
 
 	@Override
-	public void darAltaReserva() {
-		// TODO Auto-generated method stub
+	public void darAltaReserva(Reserva reserva) {
+		manager.getTransaction().begin();
+		manager.persist(reserva);
+		manager.getTransaction().commit();
 		
 	}
 

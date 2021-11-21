@@ -1,6 +1,7 @@
 package ar.edu.unju.escmi.poo.util;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
@@ -21,5 +22,12 @@ public class FechaUtil {
 			String fechaString = formato.format(fechaLocalDate);
 			return fechaString;
 			
+		}
+        public static LocalTime convertirStringLocalTime(String h) {
+			
+			LocalTime t = LocalTime.parse( h ) ;
+			
+			
+			return t;
 		}
 }

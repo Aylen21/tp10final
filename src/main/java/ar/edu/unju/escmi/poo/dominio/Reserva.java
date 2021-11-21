@@ -1,6 +1,7 @@
 package ar.edu.unju.escmi.poo.dominio;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Set;
 
@@ -33,7 +34,7 @@ public class Reserva {
 	private List<Mesa> mesa;
 	private int cantidadComensales;
 	private LocalDate fechaR;
-	private LocalDate horaR;
+	private LocalTime horaR;
 	private double total;
 
 	public Long getIdR() {
@@ -84,11 +85,13 @@ public class Reserva {
 		this.fechaR = fechaR;
 	}
 
-	public LocalDate getHoraR() {
+	
+
+	public LocalTime getHoraR() {
 		return horaR;
 	}
 
-	public void setHoraR(LocalDate horaR) {
+	public void setHoraR(LocalTime horaR) {
 		this.horaR = horaR;
 	}
 
@@ -105,7 +108,7 @@ public class Reserva {
 	}
 
 	public Reserva(Long idR, Persona cliente, Mozo mozo, List<Mesa> mesa, int cantidadComensales, LocalDate fechaR,
-			LocalDate horaR, double total) {
+			LocalTime horaR, double total) {
 		super();
 		this.idR = idR;
 		this.cliente = cliente;
