@@ -17,10 +17,12 @@ import ar.edu.unju.escmi.poo.dominio.ClienteP;
 import ar.edu.unju.escmi.poo.dominio.Mesa;
 import ar.edu.unju.escmi.poo.dominio.Mozo;
 import ar.edu.unju.escmi.poo.dominio.Persona;
+import ar.edu.unju.escmi.poo.dominio.Reserva;
 import ar.edu.unju.escmi.poo.dominio.Salon;
 import ar.edu.unju.escmi.poo.imp.AdmiDeRestauranteDaoImp;
 import ar.edu.unju.escmi.poo.imp.MozoDaoImp;
 import ar.edu.unju.escmi.poo.imp.PersonaDaoImp;
+import ar.edu.unju.escmi.poo.util.FechaUtil;
 
 
 
@@ -30,10 +32,12 @@ public class Principal {
 	public static EntityManagerFactory emf;
 	public static EntityManager manager;
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
 		  //comentario
 		
 		IPersonaDao persDao = new PersonaDaoImp();
+		IMozoDao mozoDao = new MozoDaoImp();
+		IAdmiDeRestauranteDao admiDao= new AdmiDeRestauranteDaoImp();
 		emf=Persistence.createEntityManagerFactory("TestPersistence");
 		manager = emf.createEntityManager();
 		ClienteP clienteP1 = new ClienteP("Juan","Juarez",123,456);
@@ -91,19 +95,7 @@ public class Principal {
 	}
 		*/
 	
-	 
-	//
-		
-		
-		
-		
 
-
-		
-		//
-		
-		
-		
 		
 		
 		/* Registro de el unico usuario administrador */
@@ -156,7 +148,7 @@ public class Principal {
 			System.out.println("Ingrese telefono de mozo");
 			mozo1.setTelefono(sc.nextLong());
 			// enviar esto, para que PersonaDaoImp lo use
-			IMozoDao mozoDao = new MozoDaoImp();
+			
 			mozoDao.darDeAltaMozo(mozo1);
 			System.out.println("Mozo cargado exitosamente");
 			
@@ -166,7 +158,7 @@ public class Principal {
 			
 			break;
 		case 3:
-			IAdmiDeRestauranteDao admiDao= new AdmiDeRestauranteDaoImp();
+			
 			System.out.println("Ingrese numero de salon");
 			int numSalon=sc.nextInt();//debe ser 1 o 2
 			admiDao.consultarMesas(numSalon);
@@ -212,6 +204,24 @@ public class Principal {
 					
 				    persDao.darDeAltaCLiente(clienteA1);
 					System.out.println("ClienteAT cargado exitosamente");
+					Reserva reserva1 = new Reserva();
+					System.out.println(" Creando reserva... ");
+
+					System.out.println(" Ingrese la cantidad de comensales ");
+					reserva1.setCantidadComensales(sc.nextInt());
+					System.out.println(" Ingrese fecha de reserva");// try catch
+					String fecha = sc.next();
+					reserva1.setFechaR(FechaUtil.convertirStringLocalDate(fecha));
+					System.out.println(" Ingrese hora: [HH:MM] (ejemplo: 17:30)");
+					String hora = sc.next();
+					reserva1.setHoraR(FechaUtil.convertirStringLocalTime(hora));// try catch
+
+//				reserva1.setCliente(clienteP1);
+//				reserva1.setMozo(mozo1);
+//				reserva1.setMesa(mesas2);//guardar la lista de mesas
+					admiDao.darAltaReserva(reserva1);
+	//
+					
 				
 				}
 			}
@@ -247,6 +257,23 @@ public class Principal {
 					
 				    persDao.darDeAltaCLiente(clienteP);
 					System.out.println("ClienteP cargado exitosamente");
+					Reserva reserva1 = new Reserva();
+					System.out.println(" Creando reserva... ");
+
+					System.out.println(" Ingrese la cantidad de comensales ");
+					reserva1.setCantidadComensales(sc.nextInt());
+					System.out.println(" Ingrese fecha de reserva");// try catch
+					String fecha = sc.next();
+					reserva1.setFechaR(FechaUtil.convertirStringLocalDate(fecha));
+					System.out.println(" Ingrese hora: [HH:MM] (ejemplo: 17:30)");
+					String hora = sc.next();
+					reserva1.setHoraR(FechaUtil.convertirStringLocalTime(hora));// try catch
+
+//				reserva1.setCliente(clienteP1);
+//				reserva1.setMozo(mozo1);
+//				reserva1.setMesa(mesas2);//guardar la lista de mesas
+					admiDao.darAltaReserva(reserva1);
+	//
 				
 				}
 			}
