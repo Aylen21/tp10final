@@ -6,7 +6,10 @@ import javax.persistence.Query;
 
 import ar.edu.unju.escmi.poo.config.EmfSingleton;
 import ar.edu.unju.escmi.poo.dao.IPersonaDao;
+import ar.edu.unju.escmi.poo.dominio.ClienteAT;
+import ar.edu.unju.escmi.poo.dominio.ClienteP;
 import ar.edu.unju.escmi.poo.dominio.Persona;
+
 
 
 public class PersonaDaoImp implements IPersonaDao {
@@ -42,9 +45,10 @@ public class PersonaDaoImp implements IPersonaDao {
 
 
 	@Override
-	public List<Persona> obtenerClientesAgenciaDeTurismo() {
-		// TODO Auto-generated method stub
-		return null;
+	public List<ClienteAT> obtenerClientesAgenciaDeTurismo() {
+		@SuppressWarnings("unchecked")
+		List<ClienteAT> clientesAgencias = (List<ClienteAT>) manager.createQuery("SELECT e FROM Persona e where tipo like 'Agencia'").getResultList();
+		return clientesAgencias;
 	}
 
 
@@ -57,16 +61,6 @@ public class PersonaDaoImp implements IPersonaDao {
 		return cliente;
 	}
 
-
-
-	@Override
-	public List<Persona> obtenerClientesParticulares() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-
-
 	@Override
 	public Persona obtenerClienteA(long cuit) {
 		Query query = manager.createQuery("SELECT e FROM Persona e " + "WHERE e.cuit = :cuit");
@@ -76,6 +70,13 @@ public class PersonaDaoImp implements IPersonaDao {
 	}
 
 
+	@Override
+	public List<ClienteP> obtenerClientesParticulares() {
+		@SuppressWarnings("unchecked")
+		List<ClienteP> clientesParticulares = (List<ClienteP>) manager.createQuery("SELECT e FROM Persona e where tipo like 'Particular'").getResultList();
+		return clientesParticulares;
+
+	}
 	
 
 	/*@Override

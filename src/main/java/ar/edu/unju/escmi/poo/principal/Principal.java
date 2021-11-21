@@ -184,21 +184,21 @@ public class Principal {
 			String identificador = sc.next();
 			String A = "A";
 			String P = "P";
-			
+			boolean encontrado=false;
 			if(identificador.equals(A)) {
 				System.out.println("Ingrese el cuit del cliente agencia de turismo");
 				long cuit = sc.nextLong();
-			    Persona clienteAEncontrado =  persDao.obtenerClienteA(cuit);
-			    System.out.println("1");
-			    if( clienteAEncontrado  != null) {
-					System.out.println(clienteAEncontrado);
-					System.out.println("2");
-				}
 			    
-			    else {
+				for(int i = 0; i < persDao.obtenerClientesAgenciaDeTurismo().size(); i++) {
+				   if(cuit == persDao.obtenerClientesAgenciaDeTurismo().get(i).getCuit()) {
+					   System.out.println("Cliente Encontrado");
+                       encontrado=true;
+				   }
+				}
+                 if (encontrado == false) {
 					System.out.println("No se encontró ClienteAgencia con ese número de cuit");
 
-					/*System.out.println("Ingrese los datos del cliente para hacer la reserva:");
+					System.out.println("Ingrese los datos del cliente para hacer la reserva:");
 					ClienteAT clienteA1 = new ClienteAT();
 					System.out.println("Ingrese DNI del clienteAT");
 					clienteA1.setCuit(sc.nextLong());
@@ -212,7 +212,7 @@ public class Principal {
 					
 				    persDao.darDeAltaCLiente(clienteA1);
 					System.out.println("ClienteAT cargado exitosamente");
-					*/
+				
 				}
 			}
 			else  
@@ -222,16 +222,17 @@ public class Principal {
 					
 					System.out.println("Ingrese el dni del cliente particular");
 					long dni = sc.nextLong();
-				    Persona clientePEncontrado =  persDao.obtenerClienteP(dni);
-				    if( clientePEncontrado != null) {
-						System.out.println( clientePEncontrado );
-					
-					
-				}
-				
-				else {
-					
-					/*System.out.println("El cliente particular no existe");
+					for(int i = 0; i < persDao.obtenerClientesParticulares().size(); i++) {
+						   if(dni == persDao.obtenerClientesParticulares().get(i).getDni())
+						   {
+							   
+							   System.out.println("Cliente Encontrado");
+                               encontrado = true;			  
+					}
+					}
+					if (encontrado == false) {
+
+					System.out.println("El cliente particular no existe");
 					System.out.println("Ingrese los datos del cliente para hacer la reserva:");
 					ClienteP clienteP = new ClienteP();
 					System.out.println("Ingrese DNI del clienteAT");
@@ -246,8 +247,7 @@ public class Principal {
 					
 				    persDao.darDeAltaCLiente(clienteP);
 					System.out.println("ClienteP cargado exitosamente");
-					*/
-					//ggg
+				
 				}
 			}
 			}

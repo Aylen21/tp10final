@@ -2,6 +2,8 @@ package ar.edu.unju.escmi.poo.dao;
 
 import java.util.List;
 
+import ar.edu.unju.escmi.poo.dominio.ClienteAT;
+import ar.edu.unju.escmi.poo.dominio.ClienteP;
 import ar.edu.unju.escmi.poo.dominio.Persona;
 
 public interface IPersonaDao {
@@ -12,9 +14,9 @@ public interface IPersonaDao {
     
 	public void consultarDatosCliente();
 	public int obtenerPersona();
-	public List<Persona> obtenerClientesAgenciaDeTurismo();
+	public List<ClienteAT> obtenerClientesAgenciaDeTurismo();
 	public Persona obtenerClienteP(long dni);
-	public List<Persona> obtenerClientesParticulares();
+	public List<ClienteP> obtenerClientesParticulares();
 	public Persona obtenerClienteA(long cuit);
 	/*public void guardarEmpleado(Empleado empleado);
 	public void borrarEmpleado(Empleado empleado);
