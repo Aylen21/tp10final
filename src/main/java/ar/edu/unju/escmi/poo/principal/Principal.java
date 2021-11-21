@@ -14,7 +14,6 @@ import ar.edu.unju.escmi.poo.dominio.AdminDeRestaurante;
 import ar.edu.unju.escmi.poo.dominio.ClienteP;
 import ar.edu.unju.escmi.poo.dominio.Mesa;
 import ar.edu.unju.escmi.poo.dominio.Mozo;
-import ar.edu.unju.escmi.poo.dominio.Reserva;
 import ar.edu.unju.escmi.poo.dominio.Salon;
 import ar.edu.unju.escmi.poo.imp.AdmiDeRestauranteDaoImp;
 import ar.edu.unju.escmi.poo.imp.MozoDaoImp;
@@ -39,8 +38,7 @@ public class Principal {
 		Scanner sc = new Scanner(System.in);
 		String nombre, contra;
 		boolean ingreso=false;
-		IAdmiDeRestauranteDao admiDao= new AdmiDeRestauranteDaoImp();
-		IMozoDao mozoDao = new MozoDaoImp();
+		
 		//cargamos mesas y salones
 		Mesa mesa=new Mesa();
 		List<Mesa> mesas1=new ArrayList<Mesa>(); //creando mesas
@@ -123,10 +121,6 @@ public class Principal {
 		}
 		System.out.println("Listo el pollo");
 		/*Menu principal*/
-		boolean salir=false;
-		do {
-			
-		
 		System.out.println("1 - Alta de Mozo\r\n"
 				+"2 - Listado de Mozos.\r\n"
 				+"3 - Consultar disponibilidad de mesas según salón.\r\n"
@@ -136,7 +130,6 @@ public class Principal {
 				+ "7 - Consultar los datos del cliente ingresando cuil o dni.\r\n"
 				+ "8 - Eliminar una reserva ingresando el id.\r\n"
 				+ "9 - Listar todas las reservas."
-				+ "10 - Salir"
 				);
 
 		int a = sc.nextInt();
@@ -155,7 +148,7 @@ public class Principal {
 			System.out.println("Ingrese telefono de mozo");
 			mozo1.setTelefono(sc.nextLong());
 			// enviar esto, para que PersonaDaoImp lo use
-			
+			IMozoDao mozoDao = new MozoDaoImp();
 			mozoDao.darDeAltaMozo(mozo1);
 			System.out.println("Mozo cargado exitosamente");
 			
@@ -165,7 +158,7 @@ public class Principal {
 			
 			break;
 		case 3:
-			
+			IAdmiDeRestauranteDao admiDao= new AdmiDeRestauranteDaoImp();
 			System.out.println("Ingrese numero de salon");
 			int numSalon=sc.nextInt();//debe ser 1 o 2
 			admiDao.consultarMesas(numSalon);
@@ -182,31 +175,6 @@ public class Principal {
 			long identificador;
 			identificador= sc.nextLong();
 
-			
-			// aquí va la parte de aylen 			
-			// (la verificación de cliente, si ya existe en bd, o crearlo)
-			
-			
-			//creando reserva:
-			Reserva reserva1= new Reserva();
-			System.out.println(" Creando reserva... ");
-			
-			System.out.println(" Ingrese la cantidad de comensales ");
-			reserva1.setCantidadComensales(sc.nextInt());
-			//QUITAR FECHA/HORA, Y REEMPLAZAR TOTAL POR UN BOOLEAN DE PAGADO/NO PAGADO 
-			admiDao.darAltaReserva(reserva1);
-			
-		/*	//verifico si el nombre del salón está bien escrito, para luego ver si puede reservar mesas y cuantas
-			boolean g=false;
-			do {
-				System.out.println(" ¿En que salon quiere la reserva? Salon1/Salon2 ");	
-				String ans=sc.next();
-				if(verifNombreSalon(ans)) {
-					g=true;
-				}	
-			}while(g==false);*/
-		
-			
 			
 			
 			
@@ -225,15 +193,12 @@ public class Principal {
 		case 9:
 			
 			break;
-		case 10: salir=true;
-			System.out.println(" Saliendo...");
-		break;
 			
 
 		
 		}
 		
-	}while(salir==false);
+		
 		
 	}
 	
@@ -270,20 +235,6 @@ public class Principal {
 
 		}
 		return mesas2;
-	}
-	public static boolean verifNombreSalon(String ans) {
-		//verifico si el nombre del salón está bien escrito
-		String uno="Salon1", dos="Salon2";
-		if(uno.equals(ans)) {
-			return true;	
-		}
-		else if(dos.equals(ans)) {
-			return true;
-		}
-		else {
-			return false;
-		}
-		
 	}
 
 }
