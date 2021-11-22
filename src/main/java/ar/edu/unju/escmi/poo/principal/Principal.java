@@ -144,7 +144,7 @@ public class Principal {
 			Mozo mozo1 = new Mozo();
 			System.out.println("Ingrese DNI del mozo");
 			mozo1.setDniM(sc.nextLong());
-			System.out.println("Ingrse nombre de mozo");
+			System.out.println("Ingrese nombre de mozo");
 			mozo1.setNombre(sc.next());
 			System.out.println("Ingrese email de mozo");
 			mozo1.setEmail(sc.next());
@@ -158,6 +158,7 @@ public class Principal {
 	
 			break;
 		case 2:
+			/*Busca los mozos mediante for each en una lista y muestra todos los existentes*/
 			mozoDao.listarMozos();
 			break;
 		case 3:
@@ -166,7 +167,7 @@ public class Principal {
 			int numSalon=sc.nextInt();//debe ser 1 o 2
 			admiDao.consultarMesas(numSalon);
 			
-			//ahora deviulve cuantas mesas tiene disponible el salon
+			//ahora devuelve cuantas mesas tiene disponible el salon
 			
 			break;
 		case 4:
@@ -286,15 +287,54 @@ public class Principal {
 			
 			break;
 		case 7:
-			System.out.println("Ingrese el DNI o CUIT del cliente a buscar");
+			System.out.println("El cliente a buscar es de tipo agencia de turismo(A) o  particular:(P)");
+			String tipoCliente = sc.next();
+			String A1 = "A";
+			String P1 = "P";
+			boolean clienteEncontrado=false;
+			/*Recorre la lista de clientes de agencia*/
+			if(tipoCliente.equals(A1)) {
+			System.out.println("Ingrese CUIT del cliente a buscar");
 			long iden;
 			iden= sc.nextLong();
+			
+			for(int i = 0; i < persDao.obtenerClientesAgenciaDeTurismo().size(); i++) {
+				   if(iden == persDao.obtenerClientesAgenciaDeTurismo().get(i).getCuit()) {
+					   System.out.println("Cliente Encontrado");
+                    clienteEncontrado=true;
+                    System.out.println( persDao.obtenerClienteA(iden));
+				   }
+			}
+			
+			}
+			/*Recorre la lista de clientes particulares*/
+			if(tipoCliente.equals(P1)) {
+				System.out.println("Ingrese DNI del cliente a buscar");
+				long iden;
+				iden= sc.nextLong();
+				
+				for(int i = 0; i < persDao.obtenerClientesParticulares().size(); i++) {
+					   if(iden == persDao.obtenerClientesParticulares().get(i).getDni())
+					   {
+						   
+						   System.out.println("Cliente Encontrado");
+                        clienteEncontrado = true;	
+                        System.out.println(persDao.obtenerClienteP(iden));
+				}
+				}
+			}
+			if(clienteEncontrado==false) {
+				 System.out.println("Cliente no existente en la base de datos");
+			}
+			
 			break;
 		case 8:
-			
+			System.out.println("Ingrese el id de la reserva a eliminar");
+			long idBuscado;
+			idBuscado= sc.nextLong();
 			break;
 		case 9:
-			
+			admiDao.listarReservas();
 			break;
 		case 10:
 			confirmacionSalida=true;
