@@ -3,10 +3,12 @@ package ar.edu.unju.escmi.poo.imp;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 
 import ar.edu.unju.escmi.poo.config.EmfSingleton;
 import ar.edu.unju.escmi.poo.dao.IAdmiDeRestauranteDao;
 import ar.edu.unju.escmi.poo.dominio.Mesa;
+import ar.edu.unju.escmi.poo.dominio.Mozo;
 import ar.edu.unju.escmi.poo.dominio.Reserva;
 
 
@@ -46,7 +48,11 @@ public class AdmiDeRestauranteDaoImp implements IAdmiDeRestauranteDao {
 
 	@Override
 	public void listarReservas() {
-		// TODO Auto-generated method stub
+		
+		Query query = manager.createQuery("SELECT e FROM Reserva e");
+		@SuppressWarnings("unchecked")
+		List<Reserva> reservas = (List<Reserva>)query.getResultList();
+		reservas.stream().forEach(System.out::println);
 		
 	}
 
