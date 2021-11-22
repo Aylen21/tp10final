@@ -10,6 +10,7 @@ import ar.edu.unju.escmi.poo.dao.IAdmiDeRestauranteDao;
 import ar.edu.unju.escmi.poo.dominio.Mesa;
 import ar.edu.unju.escmi.poo.dominio.Mozo;
 import ar.edu.unju.escmi.poo.dominio.Reserva;
+import ar.edu.unju.escmi.poo.dominio.Salon;
 
 
 
@@ -68,6 +69,25 @@ public class AdmiDeRestauranteDaoImp implements IAdmiDeRestauranteDao {
 		@SuppressWarnings("unchecked")
 		List<Reserva> reservas = (List<Reserva>) manager.createQuery("SELECT e FROM Reserva e").getResultList();
 		return reservas;
+	}
+	@Override
+	public boolean salonesMesasCargados() {
+		// TODO Auto-generated method stub
+		//con este metodo reviso si la base de datos ya se encuantra cargada, para no intnetar recargar los salones y mesas
+		@SuppressWarnings("unchecked")
+		List<Salon> salones = (List<Salon>) manager.createQuery("SELECT e FROM Salon e").getResultList();
+
+		if(salones.size()==0) {
+			System.out.println(" bd  vacia");
+			return false;
+		}
+		else {
+			System.out.println("bd con datos");
+			return true;
+		}
+		
+		
+			
 	}
 
 }
