@@ -25,9 +25,17 @@ public class FechaUtil {
 		}
         public static LocalTime convertirStringLocalTime(String h) {
 			
-			LocalTime t = LocalTime.parse( h ) ;
+//			LocalTime t = LocalTime.parse( h ) ;
+    		String[] parts = h.split(":");
+    		int hor = Integer.parseInt(parts[0]) ;
+    		int min = Integer.parseInt(parts[1]);
+    		
+    		
+    		LocalTime hora = LocalTime.of(hor, min);
+    		
+    		
+    		return hora;
 			
-			
-			return t;
+//			return t;
 		}
 }

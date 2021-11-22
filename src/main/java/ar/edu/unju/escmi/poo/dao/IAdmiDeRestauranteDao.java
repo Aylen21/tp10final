@@ -18,6 +18,8 @@ public interface IAdmiDeRestauranteDao {
 	public void eliminarReserva(Reserva reserva);
 	
 	public List<Reserva> obtenerReservas();
+	
+	public boolean salonesMesasCargados();
 //	public void limpiarReservas();//no sería necesario, ya existe eliminarReserva()
 
 	
