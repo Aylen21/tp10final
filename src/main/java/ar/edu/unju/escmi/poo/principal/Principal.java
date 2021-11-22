@@ -72,6 +72,20 @@ public class Principal {
 		  manager.getTransaction().commit();
 		}
 
+		//si la bd no tiene ningún mozo, va a agregar 3 por defecto
+		if(mozoDao.mozosEnBd()==false) {
+			System.out.println(" Cargando mozos por defecto");
+			//Precarga de mozos 
+
+			Mozo mozo = new  Mozo(2002,"Sebastian","seba@gmail.com",12345); 
+			mozoDao.darDeAltaMozo(mozo);
+			Mozo mozo2 = new Mozo(2003,"Hector","tor@gmail.com",5311);
+			mozoDao.darDeAltaMozo(mozo2); 
+			Mozo mozo3 = new Mozo(2004,"Julian","flo@gmail.com",82125); 
+			mozoDao.darDeAltaMozo(mozo3);
+			
+		}
+		
 		// cargando salon en las mesas
 		/*
 		 * for (int k=0;k<mesas1.size();k++) { mesas1.get(k).setSalon(salon1);
@@ -82,11 +96,7 @@ public class Principal {
 		 *
 		 *
 		 * 
-		 * //Precarga de mozos Mozo mozo = new
-		 * Mozo(2002,"Sebastian","seba@gmail.com",12345); mozoDao.darDeAltaMozo(mozo);
-		 * Mozo mozo2 = new Mozo(2003,"Hector","tor@gmail.com",5311);
-		 * mozoDao.darDeAltaMozo(mozo2); Mozo mozo3 = new
-		 * Mozo(2004,"Julian","flo@gmail.com",82125); mozoDao.darDeAltaMozo(mozo3);
+		 * 
 		 */
 
 		/* Registro de el unico usuario administrador */
@@ -115,7 +125,9 @@ public class Principal {
 			boolean band;
 			band = true;
 
-			System.out.println("1 - Alta de Mozo\r\n" + "2 - Listado de Mozos.\r\n"
+			System.out.println(""
+					+ "1 - Alta de Mozo\r\n" 
+					+ "2 - Listado de Mozos.\r\n"
 					+ "3 - Consultar disponibilidad de mesas según salón.\r\n"
 					+ "4 - Consultar mesas ocupadas mostrando la cantidad de comensales.\r\n"
 					+ "5 - Alta de una reserva.\r\n"
