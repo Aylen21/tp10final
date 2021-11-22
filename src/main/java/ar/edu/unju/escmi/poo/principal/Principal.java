@@ -97,6 +97,16 @@ public class Principal {
 		manager.persist(mesas2.get(j));
 		manager.getTransaction().commit();
 	}
+		
+		*
+		*
+	    //Precarga de mozos
+       Mozo mozo = new Mozo(2002,"Sebastian","seba@gmail.com",12345); 
+       mozoDao.darDeAltaMozo(mozo);
+        Mozo mozo2 = new Mozo(2003,"Hector","tor@gmail.com",5311); 
+       mozoDao.darDeAltaMozo(mozo2);
+        Mozo mozo3 = new Mozo(2004,"Julian","flo@gmail.com",82125); 
+       mozoDao.darDeAltaMozo(mozo3);
 		*/
 	
 
@@ -127,6 +137,9 @@ public class Principal {
 		
 		/*Menu principal*/
 		do {
+			boolean band;
+			band = true;
+			
 		System.out.println("1 - Alta de Mozo\r\n"
 				+"2 - Listado de Mozos.\r\n"
 				+"3 - Consultar disponibilidad de mesas según salón.\r\n"
@@ -146,27 +159,61 @@ public class Principal {
 		case 1:
 			System.out.println("Carga de datos de Mozo:");
 			Mozo mozo1 = new Mozo();
+			
+			band = true;
+			do {
 			System.out.println("Ingrese DNI del mozo");
-			mozo1.setDniM(sc.nextLong());
-			System.out.println("Ingrese nombre de mozo");
+			String dni = sc.next();
+			try {
+				
+				mozo1.setDniM(Integer.valueOf(dni));
+				band = false;
+
+			} catch (NumberFormatException m) {
+				System.out.println("Debe ingresar obligatoriamente dato de tipo numerico.");
+
+			}
+
+			}while (band == true);
+			
+			
+			
+			
+			System.out.println("El DNI fue ingresado correctamente, continuemos");
+			
+			System.out.println("Ingrse nombre de mozo");
 			mozo1.setNombre(sc.next());
 			System.out.println("Ingrese email de mozo");
 			mozo1.setEmail(sc.next());
+			boolean band1;
+			band1 = true;
+			do {
 			System.out.println("Ingrese telefono de mozo");
-			mozo1.setTelefono(sc.nextLong());
+			String t = sc.next();
+			try {
+			mozo1.setTelefono(Integer.valueOf(t));
+			band1 = false;
+
+			} catch (NumberFormatException ex) {
+				System.out.println("Debe ingresar obligatoriamente dato de tipo numerico.");
+
+			}
+
+			}while (band1 == true);
 			// enviar esto, para que PersonaDaoImp lo use
-			
+			System.out.println("El Telefono fue ingresado correctamente, continuemos");
 			mozoDao.darDeAltaMozo(mozo1);
 			System.out.println("Mozo cargado exitosamente");
-			
-	
 			break;
 		case 2:
-			/*Busca los mozos mediante for each en una lista y muestra todos los existentes*/
-			mozoDao.listarMozos();
+			System.out.println("=============LISTADO DE MOZOS===================");
+
+			 mozoDao.listarMozos();
+			
+			
 			break;
 		case 3:
-			
+			//falta :c
 			System.out.println("Ingrese numero de salon");
 			int numSalon=sc.nextInt();//debe ser 1 o 2
 			admiDao.consultarMesas(numSalon);
@@ -174,9 +221,11 @@ public class Principal {
 			//ahora devuelve cuantas mesas tiene disponible el salon
 			
 			break;
-		case 4:
 			
+		case 4:
+			//falta :C
 			break;
+			
 		case 5:
 			/*Dar de alta reserva, precisa de definir si el cliente ya estaba registrado con anterioridad*/
 			
@@ -322,7 +371,7 @@ public class Principal {
 			}
 			break;
 		case 6:
-			
+			//falta :c
 			break;
 		case 7:
 			System.out.println("El cliente a buscar es de tipo agencia de turismo(A) o  particular:(P)");
@@ -367,15 +416,47 @@ public class Principal {
 			
 			break;
 		case 8:
-			System.out.println("Ingrese el id de la reserva a eliminar");
-			long idBuscado;
-			idBuscado= sc.nextLong();
-			break;
+			  boolean encontrada=false;
+				System.out.println("Eliminar una reserva ingresando el id");
+				System.out.println("Ingrese el id de la reserva a eliminar");
+				int idR = sc.nextInt();
+				for(int r=0; r < admiDao.obtenerReservas().size();r ++) {
+					
+					if(idR == admiDao.obtenerReservas().get(r).getIdR()) {
+						System.out.println("=======RESERVA ENCONTRADA=========");
+						encontrada=true;
+						System.out.println("¿Confirma la eliminación? (S/N) :");
+						String respuesta = sc.next();
+						if(respuesta.equals("S")) {
+						System.out.println("Eliminando reserva.........");
+						admiDao.eliminarReserva(admiDao.obtenerReservas().get(r));
+						System.out.println("Reserva eliminada");
+						}else
+						{
+							if(respuesta.equals("N"))
+							{
+							System.out.println("Eliminacion cancelada");
+							}else
+							{
+								System.out.println("Intente de nuevo");
+							}
+							
+						}
+					}
+						
+				}
+				if (encontrada == false) {
+					System.out.println("No se encontro reserva segun el id ingresado");
+				}
+				
+				break;
 		case 9:
 			admiDao.listarReservas();
 			break;
 		case 10:
+			//salida
 			confirmacionSalida=true;
+			System.out.println("Programa finalizado, buenas tardes");
 			break;
 			
 

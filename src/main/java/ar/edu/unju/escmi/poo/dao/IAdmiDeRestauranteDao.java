@@ -1,5 +1,7 @@
 package ar.edu.unju.escmi.poo.dao;
 
+import java.util.List;
+
 import ar.edu.unju.escmi.poo.dominio.Reserva;
 
 public interface IAdmiDeRestauranteDao {
@@ -13,7 +15,9 @@ public interface IAdmiDeRestauranteDao {
 
 	public void listarReservas();
 
-	public void eliminarReserva();
+	public void eliminarReserva(Reserva reserva);
+	
+	public List<Reserva> obtenerReservas();
 //	public void limpiarReservas();//no sería necesario, ya existe eliminarReserva()
 
 	

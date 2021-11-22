@@ -57,9 +57,17 @@ public class AdmiDeRestauranteDaoImp implements IAdmiDeRestauranteDao {
 	}
 
 	@Override
-	public void eliminarReserva() {
+	public void eliminarReserva(Reserva reserva) {
 		// TODO Auto-generated method stub
-		
+		manager.getTransaction().begin();
+		manager.remove(reserva);
+		manager.getTransaction().commit();	
+	}
+	@Override
+	public List<Reserva> obtenerReservas() {
+		@SuppressWarnings("unchecked")
+		List<Reserva> reservas = (List<Reserva>) manager.createQuery("SELECT e FROM Reserva e").getResultList();
+		return reservas;
 	}
 
 }
