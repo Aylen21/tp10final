@@ -10,5 +10,6 @@ public interface IMozoDao {
 	public void darDeAltaMozo(Mozo mozo);
 	public void listarMozos();
 	public List<Mozo> obtenerMozos();
+	public boolean mozosEnBd();
 	
 }
