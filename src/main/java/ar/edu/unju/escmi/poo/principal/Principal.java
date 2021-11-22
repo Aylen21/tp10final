@@ -40,10 +40,7 @@ public class Principal {
 		IAdmiDeRestauranteDao admiDao= new AdmiDeRestauranteDaoImp();
 		emf=Persistence.createEntityManagerFactory("TestPersistence");
 		manager = emf.createEntityManager();
-		ClienteP clienteP1 = new ClienteP("Juan","Juarez",123,456);
-		manager.getTransaction().begin();
-		manager.persist(clienteP1);
-		manager.getTransaction().commit();
+		
 		
 
 		AdminDeRestaurante administrador = new AdminDeRestaurante("jjuan","12345");
@@ -60,7 +57,8 @@ public class Principal {
 		Salon salon2 = new Salon(2,10,mesas2);
 		
 		
-		manager.getTransaction().begin();
+	/*	Descomentar solo cuando se crea bd
+	 * manager.getTransaction().begin();
 //		salon1.setMesas(mesas1);
 		manager.persist(salon1);
 		manager.getTransaction().commit();
@@ -73,6 +71,12 @@ public class Principal {
 		mesas1=cargarMesas1(salon1);//cargando mesas
 		mesas2=cargarMesas2(salon2);
 		
+		*
+		*ClienteP clienteP1 = new ClienteP("Juan","Juarez",123,456);
+		manager.getTransaction().begin();
+		manager.persist(clienteP1);
+		manager.getTransaction().commit();
+		*/ //no descomentar cuando se actualiza bd
 	    
 
 	
@@ -189,6 +193,22 @@ public class Principal {
 				   if(cuit == persDao.obtenerClientesAgenciaDeTurismo().get(i).getCuit()) {
 					   System.out.println("Cliente Encontrado");
                        encontrado=true;
+                       Reserva reserva1 = new Reserva();
+   					System.out.println(" Creando reserva... ");
+
+   					System.out.println(" Ingrese la cantidad de comensales ");
+   					reserva1.setCantidadComensales(sc.nextInt());
+   					System.out.println(" Ingrese fecha de reserva");// try catch
+   					String fecha = sc.next();
+   					reserva1.setFechaR(FechaUtil.convertirStringLocalDate(fecha));
+   					System.out.println(" Ingrese hora: [HH:MM] (ejemplo: 17:30)");
+   					String hora = sc.next();
+   					reserva1.setHoraR(FechaUtil.convertirStringLocalTime(hora));// try catch
+
+   				reserva1.setCliente(persDao.obtenerClientesAgenciaDeTurismo().get(i));
+//   				reserva1.setMozo(mozo1);
+//   				reserva1.setMesa(mesas2);//guardar la lista de mesas
+   					admiDao.darAltaReserva(reserva1);
 				   }
 				}
                  if (encontrado == false) {
@@ -196,7 +216,7 @@ public class Principal {
 
 					System.out.println("Ingrese los datos del cliente para hacer la reserva:");
 					ClienteAT clienteA1 = new ClienteAT();
-					System.out.println("Ingrese DNI del clienteAT");
+					System.out.println("Ingrese CUIT del clienteAT");
 					clienteA1.setCuit(sc.nextLong());
 					System.out.println("Ingrse nombre de clienteAT");
 					clienteA1.setNombre(sc.next());
@@ -220,7 +240,7 @@ public class Principal {
 					String hora = sc.next();
 					reserva1.setHoraR(FechaUtil.convertirStringLocalTime(hora));// try catch
 
-//				reserva1.setCliente(clienteP1);
+				reserva1.setCliente(clienteA1);
 //				reserva1.setMozo(mozo1);
 //				reserva1.setMesa(mesas2);//guardar la lista de mesas
 					admiDao.darAltaReserva(reserva1);
@@ -241,7 +261,25 @@ public class Principal {
 						   {
 							   
 							   System.out.println("Cliente Encontrado");
-                               encontrado = true;			  
+                               encontrado = true;		
+                               //creando reserva para el cliente P
+                               Reserva reserva1 = new Reserva();
+           					System.out.println(" Creando reserva... ");
+
+           					System.out.println(" Ingrese la cantidad de comensales ");
+           					reserva1.setCantidadComensales(sc.nextInt());
+           					System.out.println(" Ingrese fecha de reserva");// try catch
+           					String fecha = sc.next();
+           					reserva1.setFechaR(FechaUtil.convertirStringLocalDate(fecha));
+           					System.out.println(" Ingrese hora: [HH:MM] (ejemplo: 17:30)");
+           					String hora = sc.next();
+           					reserva1.setHoraR(FechaUtil.convertirStringLocalTime(hora));// try catch
+
+           				reserva1.setCliente(persDao.obtenerClientesParticulares().get(i));
+//           				reserva1.setMozo(mozo1);
+//           				reserva1.setMesa(mesas2);//guardar la lista de mesas
+           					admiDao.darAltaReserva(reserva1);
+                               
 					}
 					}
 					if (encontrado == false) {
@@ -249,13 +287,13 @@ public class Principal {
 					System.out.println("El cliente particular no existe");
 					System.out.println("Ingrese los datos del cliente para hacer la reserva:");
 					ClienteP clienteP = new ClienteP();
-					System.out.println("Ingrese DNI del clienteAT");
+					System.out.println("Ingrese DNI del clienteP");
 					clienteP.setDni(sc.nextLong());
-					System.out.println("Ingrse nombre de clienteAT");
+					System.out.println("Ingrse nombre de clienteP");
 					clienteP.setNombre(sc.next());
-					System.out.println("Ingrese email de clienteAT");
+					System.out.println("Ingrese email de clienteP");
 					clienteP.setEmail(sc.next());
-					System.out.println("Ingrese telefono de clienteAT");
+					System.out.println("Ingrese telefono de clienteP");
 					clienteP.setTelefono(sc.nextLong());
 					// enviar esto, para que PersonaDaoImp lo use
 					
@@ -273,7 +311,7 @@ public class Principal {
 					String hora = sc.next();
 					reserva1.setHoraR(FechaUtil.convertirStringLocalTime(hora));// try catch
 
-//				reserva1.setCliente(clienteP1);
+				reserva1.setCliente(clienteP);//si da error revisar this
 //				reserva1.setMozo(mozo1);
 //				reserva1.setMesa(mesas2);//guardar la lista de mesas
 					admiDao.darAltaReserva(reserva1);
@@ -342,7 +380,7 @@ public class Principal {
 			
 
 		}
-		}while (confirmacionSalida=true);
+		}while (confirmacionSalida!=true);
 		}
 		
 		
