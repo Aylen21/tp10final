@@ -34,7 +34,7 @@ public class Principal {
 	
 	public static void main(String[] args) throws Exception {
 		  //comentario
-		
+		boolean confirmacionSalida=false;
 		IPersonaDao persDao = new PersonaDaoImp();
 		IMozoDao mozoDao = new MozoDaoImp();
 		IAdmiDeRestauranteDao admiDao= new AdmiDeRestauranteDaoImp();
@@ -120,7 +120,9 @@ public class Principal {
 			}
 		}
 		System.out.println("Listo el pollo");
+		
 		/*Menu principal*/
+		do {
 		System.out.println("1 - Alta de Mozo\r\n"
 				+"2 - Listado de Mozos.\r\n"
 				+"3 - Consultar disponibilidad de mesas según salón.\r\n"
@@ -129,7 +131,8 @@ public class Principal {
 				+ "6 - Realizar la búsqueda de una reserva para realizar la modificación de total a pagar (significa que finaliza la reserva).\r\n"
 				+ "7 - Consultar los datos del cliente ingresando cuil o dni.\r\n"
 				+ "8 - Eliminar una reserva ingresando el id.\r\n"
-				+ "9 - Listar todas las reservas."
+				+ "9 - Listar todas las reservas.\r\n"
+				+"10 - Salir"
 				);
 
 		int a = sc.nextInt();
@@ -155,7 +158,7 @@ public class Principal {
 	
 			break;
 		case 2:
-			
+			mozoDao.listarMozos();
 			break;
 		case 3:
 			
@@ -293,14 +296,18 @@ public class Principal {
 		case 9:
 			
 			break;
+		case 10:
+			confirmacionSalida=true;
+			break;
 			
 
-		
+		}
+		}while (confirmacionSalida=true);
 		}
 		
 		
 		
-	}
+	
 	
 	
 	

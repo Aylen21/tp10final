@@ -1,6 +1,9 @@
 package ar.edu.unju.escmi.poo.imp;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 
 import ar.edu.unju.escmi.poo.config.EmfSingleton;
 import ar.edu.unju.escmi.poo.dao.IMozoDao;
@@ -18,7 +21,10 @@ public class MozoDaoImp implements IMozoDao{
 
 	@Override
 	public void listarMozos() {
-		// TODO Auto-generated method stub
+		Query query = manager.createQuery("SELECT e FROM Mozo e");
+		@SuppressWarnings("unchecked")
+		List<Mozo> mozos = (List<Mozo>)query.getResultList();
+		mozos.stream().forEach(System.out::println);
 		
 	}
 
