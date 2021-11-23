@@ -1,5 +1,6 @@
 package ar.edu.unju.escmi.poo.dominio;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -21,11 +22,11 @@ public class Mesa {
 	private static final int CAPACIDAD_PERSONAS = 4;
 	private int comensalesSentados;
 	private String Estado;
-	@ManyToOne
+	@ManyToOne//(cascade = {CascadeType.ALL})
 	@JoinColumn(name = "nroDeSalon")//dueño de relación
 	private Salon salon;
 	
-	@ManyToOne
+	@ManyToOne(cascade = {CascadeType.ALL})
 	@JoinColumn(name = "idR")
 	private Reserva reserva;
 

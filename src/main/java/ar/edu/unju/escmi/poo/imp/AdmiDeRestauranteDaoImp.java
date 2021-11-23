@@ -5,6 +5,8 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
+import org.hibernate.internal.build.AllowSysOut;
+
 import ar.edu.unju.escmi.poo.config.EmfSingleton;
 import ar.edu.unju.escmi.poo.dao.IAdmiDeRestauranteDao;
 import ar.edu.unju.escmi.poo.dominio.Mesa;
@@ -165,8 +167,12 @@ if(reservas.get(i).getIdR()==id) {
 					}
 				}
 				System.out.println("guardando");
-				manager.getTransaction().begin();
-				manager.merge(mesas.get(a));
+				Mesa mes= new Mesa();
+				mes=mesas.get(a);
+				System.out.println("guardando mes: "+mes);
+				
+				manager.getTransaction().begin();		
+				manager.merge(mes);
 				manager.getTransaction().commit();
 				System.out.println("guardado: ->"+mesas.get(a));
 			}
@@ -179,6 +185,7 @@ if(reservas.get(i).getIdR()==id) {
 	public void asignarMozo(Reserva reserva) {
 		// TODO Auto-generated method stub
 		int pM=0;
+		System.out.println("asignando un mozo");
 		Query query = manager.createQuery("SELECT e FROM Mozo e");
 		@SuppressWarnings("unchecked")
 		List<Mozo> mozos = (List<Mozo>)query.getResultList();

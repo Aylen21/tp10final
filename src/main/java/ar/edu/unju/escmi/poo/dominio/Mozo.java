@@ -3,6 +3,7 @@ package ar.edu.unju.escmi.poo.dominio;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -25,7 +26,7 @@ public class Mozo {
 	private String nombre;
 	private String email;
 	private long telefono;
-	@OneToMany(mappedBy="mozo")
+	@OneToMany(mappedBy="mozo",cascade = {CascadeType.ALL})
 //	@Column(length=99999)
 	private List<Reserva> reservas;
 	
