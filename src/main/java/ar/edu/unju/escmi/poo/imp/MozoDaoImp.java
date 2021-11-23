@@ -8,6 +8,7 @@ import javax.persistence.Query;
 import ar.edu.unju.escmi.poo.config.EmfSingleton;
 import ar.edu.unju.escmi.poo.dao.IMozoDao;
 import ar.edu.unju.escmi.poo.dominio.Mozo;
+import ar.edu.unju.escmi.poo.dominio.Reserva;
 import ar.edu.unju.escmi.poo.dominio.Salon;
 
 public class MozoDaoImp implements IMozoDao{
@@ -38,7 +39,7 @@ public class MozoDaoImp implements IMozoDao{
 	}
 
 	@Override
-	public boolean mozosEnBd() {
+	public boolean revisarMozosEnBd() {
 		// TODO Auto-generated method stub
 		@SuppressWarnings("unchecked")
 		List<Mozo> mozos = (List<Mozo>) manager.createQuery("SELECT e FROM Mozo e").getResultList();
@@ -52,6 +53,15 @@ public class MozoDaoImp implements IMozoDao{
 			return true;
 		}
 	}
+
+	@Override
+	public void asignarReserva(Reserva reserva) {
+		// TODO Auto-generated method stub
+		manager.getTransaction().begin();
+		manager.merge(reserva);
+		manager.getTransaction().commit();
+	}
+	
 
 	
 	

@@ -3,6 +3,7 @@ package ar.edu.unju.escmi.poo.dao;
 import java.util.List;
 
 import ar.edu.unju.escmi.poo.dominio.Mesa;
+import ar.edu.unju.escmi.poo.dominio.Mozo;
 import ar.edu.unju.escmi.poo.dominio.Reserva;
 import ar.edu.unju.escmi.poo.dominio.Salon;
 
@@ -36,7 +37,7 @@ public interface IAdmiDeRestauranteDao {
 	public void cambiarTotal(int id, double nuevoTotal);
 	public void liberarCantMesas(int cant, int numSalon);
 //	public void asignarMozo(Reserva reserva);
-	
+	public List<Reserva> obtenerReservasDeMozo(Mozo mozo);
 //	public void limpiarReservas();//no sería necesario, ya existe eliminarReserva()
 
 	

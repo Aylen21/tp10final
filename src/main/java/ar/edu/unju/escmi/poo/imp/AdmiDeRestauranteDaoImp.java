@@ -38,35 +38,36 @@ public class AdmiDeRestauranteDaoImp implements IAdmiDeRestauranteDao {
 		@SuppressWarnings("unchecked")
 		List<Mesa> mesas = (List<Mesa>) query.getResultList();
 //		mesas.stream().forEach(System.out::println);
-		List<Mesa> mesasOcup= new ArrayList<Mesa>();
-		for(int i=0;i<mesas.size();i++) {
-			//busca todas las mesas ocupadas y las guarda para luego mostrar info
-			if(mesas.get(i).getEstado().equals("ocupada")) {
+		List<Mesa> mesasOcup = new ArrayList<Mesa>();
+		for (int i = 0; i < mesas.size(); i++) {
+			// busca todas las mesas ocupadas y las guarda para luego mostrar info
+			if (mesas.get(i).getEstado().equals("ocupada")) {
 				mesasOcup.add(mesas.get(i));
 			}
 		}
-		int contMesas1=0, contMesas2=0, comensales1=0,comensales2=0;
-		for(int j=0;j<mesasOcup.size();j++) {
-			if(mesasOcup.get(j).getSalon().getNroDeSalon()==1) {
+		int contMesas1 = 0, contMesas2 = 0, comensales1 = 0, comensales2 = 0;
+		for (int j = 0; j < mesasOcup.size(); j++) {
+			if (mesasOcup.get(j).getSalon().getNroDeSalon() == 1) {
 				contMesas1++;
-				comensales1=comensales1+mesasOcup.get(j).getComensalesSentados();
+				comensales1 = comensales1 + mesasOcup.get(j).getComensalesSentados();
 			}
 		}
-		for(int k=0;k<mesasOcup.size();k++) {
-			if(mesasOcup.get(k).getSalon().getNroDeSalon()==2) {
+		for (int k = 0; k < mesasOcup.size(); k++) {
+			if (mesasOcup.get(k).getSalon().getNroDeSalon() == 2) {
 				contMesas2++;
-				comensales2=comensales2+mesasOcup.get(k).getComensalesSentados();
+				comensales2 = comensales2 + mesasOcup.get(k).getComensalesSentados();
 			}
 		}
-		
-		System.out.println(" En el salon 1, hay "+contMesas1+" mesas ocupadas, y "+comensales1+" comnsales sentados");
-		System.out.println(" En el salon 2, hay "+contMesas2+" mesas ocupadas, y "+comensales2+" comnsales sentados");
-		
+
+		System.out.println(
+				" En el salon 1, hay " + contMesas1 + " mesas ocupadas, y " + comensales1 + " comnsales sentados");
+		System.out.println(
+				" En el salon 2, hay " + contMesas2 + " mesas ocupadas, y " + comensales2 + " comnsales sentados");
+
 	}
 
 	@Override
 	public void darAltaReserva(Reserva reserva) {
-		System.out.println("Haciendo alta mmmmmmmmmmm");
 		manager.getTransaction().begin();
 		manager.persist(reserva);
 		manager.getTransaction().commit();
@@ -113,10 +114,8 @@ public class AdmiDeRestauranteDaoImp implements IAdmiDeRestauranteDao {
 		List<Salon> salones = (List<Salon>) manager.createQuery("SELECT e FROM Salon e").getResultList();
 
 		if (salones.size() == 0) {
-			System.out.println(" bd  vacia");
 			return false;
 		} else {
-			System.out.println("bd con datos");
 			return true;
 		}
 
@@ -166,34 +165,6 @@ public class AdmiDeRestauranteDaoImp implements IAdmiDeRestauranteDao {
 		return mesasParaReserv;
 	}
 
-		
-
-	
-
-//	@Override
-//	public void asignarMozo(Reserva reserva) {
-//		// TODO Auto-generated method stub
-//		int pM = 0;
-//		System.out.println("asignando un mozo");
-//		/*
-//		 * @SuppressWarnings("unchecked") List<Mozo> mozos= (List<Mozo>)
-//		 * manager.createQuery("SELECT e FROM Mozo e").getResultList();
-//		 */
-//		@SuppressWarnings("unchecked")
-//		List<Mozo> mozos = (List<Mozo>) manager.createQuery("SELECT e FROM Mozo e").getResultList();
-//		// Query query = manager.createQuery("SELECT e FROM Mozo e");
-//
-//		// List<Mozo> mozos = (List<Mozo>)query.getResultList();
-//		for (int i = 0; i < mozos.size(); i++) {
-//			if (mozos.get(i).getReservas().size() < 4) {
-//				pM = i;
-//			}
-//		}
-//
-//		reserva.setMozo(mozos.get(pM));
-//		
-//
-//	}
 
 	@Override
 	public void guardarSalon(Salon salon) {
@@ -233,45 +204,58 @@ public class AdmiDeRestauranteDaoImp implements IAdmiDeRestauranteDao {
 	@Override
 	public void cambiarTotal(int id, double nuevoTotal) {
 		// TODO Auto-generated method stub
-		@SuppressWarnings("unchecked") List<Reserva> reservas= (List<Reserva>)
-				manager.createQuery("SELECT e FROM Reserva e").getResultList();
-		for(int i=0;i<reservas.size();i++) {
-			if(reservas.get(i).getIdR()==id) {
+		@SuppressWarnings("unchecked")
+		List<Reserva> reservas = (List<Reserva>) manager.createQuery("SELECT e FROM Reserva e").getResultList();
+		for (int i = 0; i < reservas.size(); i++) {
+			if (reservas.get(i).getIdR() == id) {
 				reservas.get(i).setTotal(nuevoTotal);
 				manager.getTransaction().begin();
 				manager.merge(reservas.get(i));
 				manager.getTransaction().commit();
 			}
 		}
-		
+
 	}
 
 	@Override
 	public void cambiarEstado(Mesa mesa) {
 		// TODO Auto-generated method stub
-		
-				manager.getTransaction().begin();
-				manager.merge(mesa);
-				manager.getTransaction().commit();
-			}
+
+		manager.getTransaction().begin();
+		manager.merge(mesa);
+		manager.getTransaction().commit();
+	}
+
 	@Override
 	public void liberarCantMesas(int cant, int numSalon) {
 		// TODO Auto-generated method stub
-		@SuppressWarnings("unchecked") List<Mesa> mesas= (List<Mesa>)
-				manager.createQuery("SELECT e FROM Mesa e").getResultList();
-		for(int i=0;i<mesas.size();i++) {
-			if(mesas.get(i).getSalon().getNroDeSalon()==numSalon) {
-				
-				if(mesas.get(i).getEstado().equals("ocupada")) {
+		@SuppressWarnings("unchecked")
+		List<Mesa> mesas = (List<Mesa>) manager.createQuery("SELECT e FROM Mesa e").getResultList();
+		for (int i = 0; i < mesas.size(); i++) {
+			if (mesas.get(i).getSalon().getNroDeSalon() == numSalon) {
+
+				if (mesas.get(i).getEstado().equals("ocupada")) {
 					mesas.get(i).setEstado("desocupada");
 					manager.getTransaction().begin();
 					manager.merge(mesas.get(i));
-					manager.getTransaction().commit();		
+					manager.getTransaction().commit();
 				}
-				
+
 			}
 		}
-		
+
+	}
+	
+	@Override
+	public List<Reserva> obtenerReservasDeMozo(Mozo mozo) {
+		// TODO Auto-generated method stub
+		List<Reserva> reservas = new ArrayList<Reserva>();
+		for(Reserva r: obtenerReservas()) {
+			if(r.getMozo().equals(mozo)) {
+				reservas.add(r);
+			}
+		}
+		return reservas;
 	}
 
 }
