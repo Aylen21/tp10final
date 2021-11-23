@@ -681,7 +681,7 @@ public class Principal {
 			}
 		}
 		
-		}while(conformidad!=true);
+		}while(conformidad==true);
 
 
 		return reserva1;
