@@ -31,11 +31,12 @@ import ar.edu.unju.escmi.poo.util.FechaUtil;
 public class Principal {
 
 	public static void main(String[] args) throws Exception {
-	
+
 		boolean confirmacionSalida = false;
 		IPersonaDao persDao = new PersonaDaoImp();
 		IMozoDao mozoDao = new MozoDaoImp();
 		IAdmiDeRestauranteDao admiDao = new AdmiDeRestauranteDaoImp();
+
 
 		AdminDeRestaurante administrador = new AdminDeRestaurante("jjuan", "12345");
 		Scanner sc = new Scanner(System.in);
@@ -57,6 +58,7 @@ public class Principal {
 			admiDao.cargarMesas2(mesas2, salon2);
 
 
+
 		}
 		// si la bd no tiene ningún mozo, va a agregar 3 por defecto
 		if (mozoDao.revisarMozosEnBd() == false) {
@@ -72,8 +74,8 @@ public class Principal {
 
 		}
 
-		// cargando salon en las mesas
-
+		//inicio del menu, con registro de unico administrador
+		
 		while (ingreso == false) {
 			System.out.println("-----Inicio de sesion-----");
 			System.out.println("Nombre de usuario:");
@@ -182,7 +184,7 @@ public class Principal {
 
 						}
 					}
-					System.out.println("El numero de mesas desocupadas en el Salon 1 es de" + cont + "/20");
+					System.out.println("El numero de mesas desocupadas en el Salon 1 es de: " + cont + "/20");
 
 				} else {
 
@@ -192,12 +194,12 @@ public class Principal {
 								cont = cont + 1;
 							}
 						}
-						System.out.println("El numero de mesas desocupadas en el Salon 2 es de" + cont + "/10");
+						System.out.println("El numero de mesas desocupadas en el Salon 2 es de: " + cont + "/10");
 					}
 
 				}
 
-				// ahora deviulve cuantas mesas tiene disponible el salon
+				// ahora devuelve cuantas mesas tiene disponible el salon
 
 				break;
 			//
@@ -237,17 +239,18 @@ public class Principal {
 
 						}
 					} while (band3 == true);
-//				long cuit = sc.nextLong();
 
+//recorre lista de clientes de turismo hasta enconrtrar el buscado
 					for (int i = 0; i < persDao.obtenerClientesAgenciaDeTurismo().size(); i++) {
 						if (cuitC == persDao.obtenerClientesAgenciaDeTurismo().get(i).getCuit()) {
 							System.out.println("Cliente Encontrado");
 							encontrado = true;
+
 							admiDao.darAltaReserva(pedirDatos(persDao.obtenerClientesAgenciaDeTurismo().get(i)));
 						}
 					}
 					if (encontrado == false) {
-						System.out.println("No se encontró ClienteAgencia con ese número de cuit");
+						System.out.println("No se encontró Cliente Agencia con ese número de cuit");
 
 						System.out.println("Ingrese los datos del cliente para hacer la reserva:");
 						ClienteAT clienteA1 = new ClienteAT();
@@ -276,6 +279,7 @@ public class Principal {
 						persDao.darDeAltaCLiente(clienteA1);
 						System.out.println("ClienteAT cargado exitosamente");
 						// ahora, creando reserva:
+
 						admiDao.darAltaReserva(pedirDatos(clienteA1));
 						//
 
@@ -560,7 +564,7 @@ public class Principal {
 			}
 		} while (band3 == true);
 
-		reserva1.setCliente(cliente);// si da error revisar this
+		reserva1.setCliente(cliente);
 
 		do {
 //			/bucle del try catch de numero/
@@ -648,8 +652,8 @@ public class Principal {
 			}
 			
 			reserva1.setMozo(mozos.get(pM));
-			System.out.println("3-Salon seleccionado= " + salonSeleccionado);
-			Reserva reserAux = reserva1;
+		
+		
 			int contNecesario=0;
 			if (salonSeleccionado > 0) {
 				if (salonSeleccionado == 1) {
@@ -683,17 +687,10 @@ public class Principal {
 								}
 							}
 							System.out.println("guardando");
-//							Mesa mes = new Mesa();
-//							mes = mesas.get(p);
+
 							
 							admiDao.cambiarEstado(mesas.get(p));
 							mesasAux.add(mesas.get(p));
-//							admiDao.asignarMozo(reserva1);
-
-//							reserva1.setMozo(mozo1);
-//							/cambiar la reserva a la que corresponde/
-//							
-//							/determinando cantidad comensales por mesa/
 
 						}
 						}
@@ -731,17 +728,11 @@ public class Principal {
 								}
 							}
 							System.out.println("guardando");
-//							Mesa mes = new Mesa();
-//							mes = mesas.get(p);
+
 							
 							admiDao.cambiarEstado(mesas.get(p));
 							mesasAux.add(mesas.get(p));
-//							admiDao.asignarMozo(reserva1);
 
-//							reserva1.setMozo(mozo1);
-//							/cambiar la reserva a la que corresponde/
-//							
-//							/determinando cantidad comensales por mesa/
 
 						}
 						}

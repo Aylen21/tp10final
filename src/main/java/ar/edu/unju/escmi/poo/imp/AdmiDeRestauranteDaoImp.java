@@ -37,7 +37,7 @@ public class AdmiDeRestauranteDaoImp implements IAdmiDeRestauranteDao {
 		Query query = manager.createQuery("SELECT e FROM Mesa e");
 		@SuppressWarnings("unchecked")
 		List<Mesa> mesas = (List<Mesa>) query.getResultList();
-//		mesas.stream().forEach(System.out::println);
+
 		List<Mesa> mesasOcup = new ArrayList<Mesa>();
 		for (int i = 0; i < mesas.size(); i++) {
 			// busca todas las mesas ocupadas y las guarda para luego mostrar info
@@ -60,9 +60,9 @@ public class AdmiDeRestauranteDaoImp implements IAdmiDeRestauranteDao {
 		}
 
 		System.out.println(
-				" En el salon 1, hay " + contMesas1 + " mesas ocupadas, y " + comensales1 + " comnsales sentados");
+				" En el salon 1, hay " + contMesas1 + " mesas ocupadas, y " + comensales1 + " comensales sentados");
 		System.out.println(
-				" En el salon 2, hay " + contMesas2 + " mesas ocupadas, y " + comensales2 + " comnsales sentados");
+				" En el salon 2, hay " + contMesas2 + " mesas ocupadas, y " + comensales2 + " comensales sentados");
 
 	}
 
@@ -261,6 +261,7 @@ public class AdmiDeRestauranteDaoImp implements IAdmiDeRestauranteDao {
 	@Override
 	public void cambiarMozo(int id) {
 			// TODO Auto-generated method stub
+		//liberar al mozo de la reserva
 			@SuppressWarnings("unchecked") List<Reserva> reservas= (List<Reserva>)
 					manager.createQuery("SELECT e FROM Reserva e").getResultList();
 			for(int i=0;i<reservas.size();i++) {
