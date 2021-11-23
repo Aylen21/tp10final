@@ -14,23 +14,23 @@ import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "Reservas")
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 public class Reserva {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long idR;
-	@ManyToOne
+	@OneToOne
 	@JoinColumn(name = "id")
 	private Persona cliente;
 	@ManyToOne
-	@JoinColumn(name = "dniM")
+	@JoinColumn(name = "idM")
 	private Mozo mozo;
-	@OneToMany
+	@OneToMany(mappedBy="reserva")
 	private List<Mesa> mesa;
 	private int cantidadComensales;
 	private LocalDate fechaR;
@@ -41,9 +41,9 @@ public class Reserva {
 		return idR;
 	}
 
-	public void setIdR(Long idR) {
-		this.idR = idR;
-	}
+//	public void setIdR(Long idR) {
+//		this.idR = idR;
+//	}
 
 	public Persona getCliente() {
 		return cliente;
@@ -107,10 +107,10 @@ public class Reserva {
 
 	}
 
-	public Reserva(Long idR, Persona cliente, Mozo mozo, List<Mesa> mesa, int cantidadComensales, LocalDate fechaR,
+	public Reserva( Persona cliente, Mozo mozo, List<Mesa> mesa, int cantidadComensales, LocalDate fechaR,
 			LocalTime horaR, double total) {
 		super();
-		this.idR = idR;
+
 		this.cliente = cliente;
 		this.mozo = mozo;
 		this.mesa = mesa;

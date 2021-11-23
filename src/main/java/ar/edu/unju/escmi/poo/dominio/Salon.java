@@ -14,7 +14,6 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="Salones")
-@Inheritance(strategy=InheritanceType.SINGLE_TABLE)
 public class Salon {
 	
 	@Id

@@ -12,25 +12,30 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "Mesas")
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 public class Mesa {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long idMesa;
 	private static final int CAPACIDAD_PERSONAS = 4;
+	private int comensalesSentados;
 	private String Estado;
 	@ManyToOne
 	@JoinColumn(name = "nroDeSalon")//dueño de relación
 	private Salon salon;
+	
+	@ManyToOne
+	@JoinColumn(name = "idR")
+	private Reserva reserva;
 
+	
 	public Long getIdMesa() {
 		return idMesa;
 	}
 
-	public void setIdMesa(Long idMesa) {
-		this.idMesa = idMesa;
-	}
+//	public void setIdMesa(Long idMesa) {
+//		this.idMesa = idMesa;
+//	}
 
 	public static int getCantidadPersonas() {
 		return CAPACIDAD_PERSONAS;
@@ -65,9 +70,28 @@ public class Mesa {
 		Estado = estado;
 	}
 
+
+
+	public int getComensalesSentados() {
+		return comensalesSentados;
+	}
+
+	public void setComensalesSentados(int comensalesSentados) {
+		this.comensalesSentados = comensalesSentados;
+	}
+
+	public Reserva getReserva() {
+		return reserva;
+	}
+
+	public void setReserva(Reserva reserva) {
+		this.reserva = reserva;
+	}
+
 	@Override
 	public String toString() {
-		return "Mesa [idMesa=" + idMesa + ", Estado=" + Estado + ", salon=" + salon + "]";
+		return "Mesa [idMesa=" + idMesa + ", comensalesSentados=" + comensalesSentados + ", Estado=" + Estado
+				+ ", salon=" + salon + ", reserva=" + reserva + "]";
 	}
 
 
