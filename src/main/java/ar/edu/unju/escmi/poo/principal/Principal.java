@@ -29,17 +29,13 @@ import ar.edu.unju.escmi.poo.imp.PersonaDaoImp;
 import ar.edu.unju.escmi.poo.util.FechaUtil;
 
 public class Principal {
-//	public static EntityManagerFactory emf;
-//	public static EntityManager manager;
 
 	public static void main(String[] args) throws Exception {
-		// comentario
+	
 		boolean confirmacionSalida = false;
 		IPersonaDao persDao = new PersonaDaoImp();
 		IMozoDao mozoDao = new MozoDaoImp();
 		IAdmiDeRestauranteDao admiDao = new AdmiDeRestauranteDaoImp();
-//		emf = Persistence.createEntityManagerFactory("TestPersistence");
-//		manager = emf.createEntityManager();
 
 		AdminDeRestaurante administrador = new AdminDeRestaurante("jjuan", "12345");
 		Scanner sc = new Scanner(System.in);
@@ -50,8 +46,6 @@ public class Principal {
 			List<Mesa> mesas1 = new ArrayList<Mesa>(); // creando mesas
 			List<Mesa> mesas2 = new ArrayList<Mesa>();
 
-//			Salon salon1 = new Salon(1, 20, mesas1);
-//			Salon salon2 = new Salon(2, 10, mesas2);
 			Salon salon1 = new Salon(1, 20, mesas1);
 			Salon salon2 = new Salon(2, 10, mesas2);
 			admiDao.guardarSalon(salon2);
@@ -62,20 +56,6 @@ public class Principal {
 			admiDao.cargarMesas1(mesas1, salon1);
 			admiDao.cargarMesas2(mesas2, salon2);
 
-//		  ClienteP clienteP1 = new ClienteP("Juan","Juarez",123,456);
-//		  manager.getTransaction().begin(); 
-//		  manager.persist(clienteP1);
-//		  manager.getTransaction().commit();
-			//
-			/*
-			 * for (int k=0;k<mesas1.size();k++) { mesas1.get(k).setSalon(salon1);
-			 * manager.getTransaction().begin(); manager.merge(mesas1.get(k));
-			 * manager.getTransaction().commit(); }
-			 * 
-			 * for (int j=0;j<mesas2.size();j++) { mesas1.get(j).setSalon(salon2);
-			 * manager.getTransaction().begin(); manager.merge(mesas2.get(j));
-			 * manager.getTransaction().commit(); }
-			 */
 
 		}
 		// si la bd no tiene ningún mozo, va a agregar 3 por defecto
@@ -263,9 +243,6 @@ public class Principal {
 						if (cuitC == persDao.obtenerClientesAgenciaDeTurismo().get(i).getCuit()) {
 							System.out.println("Cliente Encontrado");
 							encontrado = true;
-//					reserva1.setCliente(persDao.obtenerClientesAgenciaDeTurismo().get(i)); no use
-//   				reserva1.setMozo(mozo1);
-//   				reserva1.setMesa(mesas2);//guardar la lista de mesas
 							admiDao.darAltaReserva(pedirDatos(persDao.obtenerClientesAgenciaDeTurismo().get(i)));
 						}
 					}
@@ -274,7 +251,6 @@ public class Principal {
 
 						System.out.println("Ingrese los datos del cliente para hacer la reserva:");
 						ClienteAT clienteA1 = new ClienteAT();
-//					System.out.println("Ingrese CUIT del clienteAT"); ya se lo ingresó
 						clienteA1.setCuit(cuitC);
 						System.out.println("Ingrese nombre de clienteAT");
 						clienteA1.setNombre(sc.next());
@@ -300,10 +276,6 @@ public class Principal {
 						persDao.darDeAltaCLiente(clienteA1);
 						System.out.println("ClienteAT cargado exitosamente");
 						// ahora, creando reserva:
-
-//						reserva1.setCliente(clienteA1);
-//				reserva1.setMozo(mozo1);
-//				reserva1.setMesa(mesas2);//guardar la lista de mesas
 						admiDao.darAltaReserva(pedirDatos(clienteA1));
 						//
 
@@ -334,9 +306,6 @@ public class Principal {
 								System.out.println("Cliente Encontrado");
 								encontrado = true;
 								// creando reserva para el cliente P
-//							reserva1.setCliente(persDao.obtenerClientesParticulares().get(i));no use
-//           				reserva1.setMozo(mozo1);
-//           				reserva1.setMesa(mesas2);//guardar la lista de mesas
 								admiDao.darAltaReserva(pedirDatos(persDao.obtenerClientesParticulares().get(i)));
 
 							}
@@ -346,7 +315,6 @@ public class Principal {
 							System.out.println("El cliente particular no existe");
 							System.out.println("Ingrese los datos del cliente para hacer la reserva:");
 							ClienteP clienteP = new ClienteP();
-//					System.out.println("Ingrese DNI del clienteP"); ya ingresado
 							clienteP.setDni(dni);
 							System.out.println("Ingrse nombre de clienteP");
 							clienteP.setNombre(sc.next());
