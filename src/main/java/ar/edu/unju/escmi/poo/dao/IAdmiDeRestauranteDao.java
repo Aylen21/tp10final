@@ -34,6 +34,7 @@ public interface IAdmiDeRestauranteDao {
 
 	public void cambiarEstado(Mesa mesa);
 	public void cambiarTotal(int id, double nuevoTotal);
+	public void liberarCantMesas(int cant, int numSalon);
 //	public void asignarMozo(Reserva reserva);
 	
 //	public void limpiarReservas();//no sería necesario, ya existe eliminarReserva()
