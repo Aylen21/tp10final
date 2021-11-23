@@ -632,9 +632,9 @@ public class Principal {
 					{
 						if (admiDao.obtenerMesasSalon1().get(p).getEstado().equals(estado)){
 //							/Recorre y Compara id del de la lista con el de la tabla y cambia el estado/
-							
+							String e="ocupado";
 //							/cambiar estado a ocupado/
-							admiDao.cambiarEstado(admiDao.obtenerMesasSalon1().get(p),"ocupado",c,reserva1,p);
+							admiDao.cambiarEstado(admiDao.obtenerMesasSalon1().get(p).getIdMesa(),e,c,reserva1,p);
 							admiDao.asignarMozo(reserva1);
 //							reserva1.setMozo(mozo1);
 //							/cambiar la reserva a la que corresponde/
@@ -647,10 +647,10 @@ public class Principal {
 				}
 				else if(salonSeleccionado==2) {
 					for(int p = 0; p<admiDao.calcularMesasNecesarias(c)  ;p++)
-					{
+					{String e="ocupado";
 						if (admiDao.obtenerMesasSalon2().get(p).getEstado().equals(estado)){
 							/*/Recorre y Compara id del de la lista con el de la tabla y cambia el estado*/
-							admiDao.cambiarEstado(admiDao.obtenerMesasSalon1().get(p),"ocupado",c,reserva1,p);
+							admiDao.cambiarEstado(admiDao.obtenerMesasSalon1().get(p).getIdMesa(),e,c,reserva1,p);
 							admiDao.asignarMozo(reserva1);
 //							reserva1.setMozo(mozo1);
 //							/cambiar estado a ocupado/

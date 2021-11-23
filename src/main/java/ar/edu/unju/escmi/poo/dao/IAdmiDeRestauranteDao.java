@@ -32,7 +32,7 @@ public interface IAdmiDeRestauranteDao {
 	public List<Mesa> obtenerMesasSalon2() ;
 	public int calcularMesasNecesarias(int cantRequerida);
 
-	public void cambiarEstado(Mesa mesa,String estado,int c, Reserva reserva, int p);
+	public void cambiarEstado(Long id,String estado,int c, Reserva reserva, int p);
 	public void asignarMozo(Reserva reserva);
 	
 //	public void limpiarReservas();//no sería necesario, ya existe eliminarReserva()
