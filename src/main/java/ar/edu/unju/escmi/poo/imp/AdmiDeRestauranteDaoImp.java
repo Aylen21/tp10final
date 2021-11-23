@@ -166,14 +166,6 @@ public class AdmiDeRestauranteDaoImp implements IAdmiDeRestauranteDao {
 		return mesasParaReserv;
 	}
 
-	@Override
-	public void cambiarEstado(Mesa mesa) {
-		// TODO Auto-generated method stub
-		
-				manager.getTransaction().begin();
-				manager.merge(mesa);
-				manager.getTransaction().commit();
-			}
 		
 
 	
@@ -249,6 +241,34 @@ public class AdmiDeRestauranteDaoImp implements IAdmiDeRestauranteDao {
 				manager.getTransaction().begin();
 				manager.merge(reservas.get(i));
 				manager.getTransaction().commit();
+			}
+		}
+		
+	}
+
+	@Override
+	public void cambiarEstado(Mesa mesa) {
+		// TODO Auto-generated method stub
+		
+				manager.getTransaction().begin();
+				manager.merge(mesa);
+				manager.getTransaction().commit();
+			}
+	@Override
+	public void liberarCantMesas(int cant, int numSalon) {
+		// TODO Auto-generated method stub
+		@SuppressWarnings("unchecked") List<Mesa> mesas= (List<Mesa>)
+				manager.createQuery("SELECT e FROM Mesa e").getResultList();
+		for(int i=0;i<mesas.size();i++) {
+			if(mesas.get(i).getSalon().getNroDeSalon()==numSalon) {
+				
+				if(mesas.get(i).getEstado().equals("ocupada")) {
+					mesas.get(i).setEstado("desocupada");
+					manager.getTransaction().begin();
+					manager.merge(mesas.get(i));
+					manager.getTransaction().commit();		
+				}
+				
 			}
 		}
 		

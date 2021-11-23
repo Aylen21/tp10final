@@ -425,6 +425,9 @@ public class Principal {
 					
 					
 					admiDao.cambiarTotal(idReserva, totalNuevo);
+					int cantidadM=admiDao.traerUnaReserva(idReserva).getMesa().size();
+					int numSalon1=admiDao.traerUnaReserva(idReserva).getMesa().get(0).getSalon().getNroDeSalon();
+					admiDao.liberarCantMesas(cantidadM, numSalon1);
 					idCorrecto=true;
 					System.out.println(" Nuevo total asignado con exito");
 				}else {
@@ -644,7 +647,7 @@ public class Principal {
 				System.out.println("Salon 2 unicamente disponible");
 				salonSeleccionado = 2;
 			} else {
-//			/Cantidad superior se pregunta si quiere rehacer la solicitud o no hacer la reserva/
+//		/Cantidad superior se pregunta si quiere rehacer la solicitud o no hacer la reserva/
 				System.out.println(
 						"Cantidad superior al maximo disponible en ambos salones, ¿Desea volver a intentarlo?(S/N)");
 				String op = sc.next();
@@ -681,33 +684,33 @@ public class Principal {
 						if (admiDao.obtenerMesasSalon1().get(p).getEstado().equals(estado)) {
 //							/Recorre y Compara id del de la lista con el de la tabla y cambia el estado/
 
-//							/cambiar estado a ocupado/
+//			/cambiar estado a ocupado/
 
 							System.out.println("estado antes: " + mesas.get(p));
 							mesas.get(p).setEstado(e);
 							System.out.println("estado despues: " + mesas.get(p));
 
 							if (c % 4 == 0) {
-//					/cantidadComensales=4/
+//			/cantidadComensales=4/
 								mesas.get(p).setComensalesSentados(4);
 								System.out.println("1");
 							} else {
 								if (admiDao.calcularMesasNecesarias(c) - p == 1) {
-//						/cantidad comensales=c%4/
+//			/cantidad comensales=c%4/
 									mesas.get(p).setComensalesSentados(c % 4);
 									System.out.println("2");
 								} else {
-//						/cantidadComensales=4/
+//			/cantidadComensales=4/
 									mesas.get(p).setComensalesSentados(4);
 									System.out.println("3");
 								}
 							}
 							System.out.println("guardando");
-							Mesa mes = new Mesa();
-							mes = mesas.get(p);
+//							Mesa mes = new Mesa();
+//							mes = mesas.get(p);
 							
-							mesasAux.add(p, mes);
-							//admiDao.cambiarEstado(mes);
+							admiDao.cambiarEstado(mesas.get(p));
+							mesasAux.add(mesas.get(p));
 //							admiDao.asignarMozo(reserva1);
 
 //							reserva1.setMozo(mozo1);
@@ -728,7 +731,7 @@ public class Principal {
 						if (admiDao.obtenerMesasSalon2().get(p).getEstado().equals(estado)) {
 							System.out.println("estado antes: " + mesas.get(p));
 							mesas.get(p).setEstado(e);
-							mesas.get(p).setReserva(reserAux);
+//							mesas.get(p).setReserva(reserAux);
 							System.out.println("estado despues: " + mesas.get(p));
 
 							if (c % 4 == 0) {
@@ -747,10 +750,11 @@ public class Principal {
 								}
 							}
 							System.out.println("guardando");
-							Mesa mes = new Mesa();
-							mes = mesas.get(p);
-							mesasAux.add(p, mes);
-							//admiDao.cambiarEstado(mes);
+//							Mesa mes = new Mesa();
+//							mes = mesas.get(p);
+							admiDao.cambiarEstado(mesas.get(p));
+							mesasAux.add(mesas.get(p));
+							
 
 						}
 					}
