@@ -236,6 +236,7 @@ public class AdmiDeRestauranteDaoImp implements IAdmiDeRestauranteDao {
 
 				if (mesas.get(i).getEstado().equals("ocupada")) {
 					mesas.get(i).setEstado("desocupada");
+					mesas.get(i).setComensalesSentados(0);
 					manager.getTransaction().begin();
 					manager.merge(mesas.get(i));
 					manager.getTransaction().commit();
