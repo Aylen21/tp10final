@@ -46,7 +46,7 @@ public class Principal {
 
 		
 
-//		if(admiDao.salonesMesasCargados()==false) {
+		if(admiDao.salonesMesasCargados()==false) {
 			List<Mesa> mesas1 = new ArrayList<Mesa>(); // creando mesas
 			List<Mesa> mesas2 = new ArrayList<Mesa>();
 
@@ -63,7 +63,10 @@ public class Principal {
 			mesas2=cargarMesas2(salon2);
 			admiDao.cargarMesas1(mesas1,salon1);
 			admiDao.cargarMesas2(mesas2,salon2);
-//		  
+			
+			
+			
+		  
 //		  ClienteP clienteP1 = new ClienteP("Juan","Juarez",123,456);
 //		  manager.getTransaction().begin(); 
 //		  manager.persist(clienteP1);
@@ -80,9 +83,9 @@ public class Principal {
 		  mesas1.get(j).setSalon(salon2); 
 		  manager.getTransaction().begin();
 		  manager.merge(mesas2.get(j));
-		  manager.getTransaction().commit(); }
+		  manager.getTransaction().commit(); }*/
 		 
-//		}
+	}
 		//si la bd no tiene ningún mozo, va a agregar 3 por defecto
 		if(mozoDao.mozosEnBd()==false) {
 			System.out.println(" Cargando mozos por defecto");
@@ -96,10 +99,6 @@ public class Principal {
 			mozoDao.darDeAltaMozo(mozo3);
 			
 		}
-		manager.getTransaction().begin();
-		admiDao.traerUnaReserva(1).setTotal(20);
-		manager.getTransaction().commit();
-		 */
 		
 
 		// cargando salon en las mesas
@@ -208,7 +207,7 @@ public class Principal {
 				System.out.println(" Consultar disponibilidad de mesas según salón.");
 				System.out.println("Ingrese el numero de  Salon (1) o (2)");
 				int numSalon=sc.nextInt();
-				String estado="desocupada"; 
+				String estado="desocupado"; 
 				int cont = 0;
 				if (numSalon == 1) {
 					for(int m = 0; m< admiDao.obtenerMesasSalon1().size();m++)
@@ -503,7 +502,7 @@ public class Principal {
 		boolean conformidad=true;
 		boolean band7;
 		band7 = true;
-		String estado="desocupada";
+		String estado="desocupado";
 		int c=0;
 		
 		do {
@@ -596,12 +595,15 @@ public class Principal {
 			case 1:
 				System.out.println("Salon 1 Seleccionado");
 				salonSeleccionado=1;
+				System.out.println("Salon seleccionado(c1)= "+salonSeleccionado);
 				break;
 			case 2:
 				System.out.println("Salon 2 Seleccionado");
 				salonSeleccionado=2;
+				System.out.println("Salon seleccionado (c2)= "+salonSeleccionado);
 				break;
 			}
+			System.out.println("Salon seleccionado(lueog de cases)= "+salonSeleccionado);
 		}
 		else if(admiDao.calcularMesasNecesarias(c)<=contMesas1) {
 			System.out.println("Salon 1 unicamente disponible");
@@ -624,12 +626,13 @@ public class Principal {
 				conformidad=false;
 				break;
 			}
-			
+		}
 //			/Guardado de mesas/
+			System.out.println("3-Salon seleccionado= "+salonSeleccionado);
 			if(salonSeleccionado>0) {
 				if(salonSeleccionado==1) {
-					for(int p = 0; p<admiDao.calcularMesasNecesarias(c)  ;p++)
-					{
+					for(int p = 0; p<admiDao.calcularMesasNecesarias(c) ;p++)
+					{System.out.println("el estado  es: "+estado); 
 						if (admiDao.obtenerMesasSalon1().get(p).getEstado().equals(estado)){
 //							/Recorre y Compara id del de la lista con el de la tabla y cambia el estado/
 							String e="ocupado";
@@ -646,8 +649,10 @@ public class Principal {
 					}
 				}
 				else if(salonSeleccionado==2) {
+					
 					for(int p = 0; p<admiDao.calcularMesasNecesarias(c)  ;p++)
 					{String e="ocupado";
+				System.out.println("el estado  es: "+estado); 
 						if (admiDao.obtenerMesasSalon2().get(p).getEstado().equals(estado)){
 							/*/Recorre y Compara id del de la lista con el de la tabla y cambia el estado*/
 							admiDao.cambiarEstado(admiDao.obtenerMesasSalon1().get(p).getIdMesa(),e,c,reserva1,p);
@@ -669,31 +674,29 @@ public class Principal {
 									/*cantidadComensales=4*/
 								}
 							
-						}
-						
+						}				
 					}
 				}
 				conformidad=false;
 			}
 		}
 		
-		}
 		}while(conformidad!=true);
 
 
 		return reserva1;
-	}
+}
 
 	public static List<Mesa> cargarMesas1(Salon salon1) {
 		IAdmiDeRestauranteDao admiDao= new AdmiDeRestauranteDaoImp();
 		List<Mesa> mesas1 = new ArrayList<Mesa>();
 
 		for (int i = 0; i < 20; i++) {// agregando 20 mesas a la lista
-			Mesa mesa = new Mesa();// creando una mesa
-			mesa.setEstado("desocupada");
-			mesa.setSalon(salon1);
-			mesa.setReserva(null);
-			mesa.setComensalesSentados(0);
+			Mesa mesa = new Mesa(0,"desocupado",salon1,null);// creando una mesa
+//			mesa.setEstado("desocupada");
+//			mesa.setSalon(salon1);
+//			mesa.setReserva(null);
+//			mesa.setComensalesSentados(0);
 			mesas1.add(mesa);// agregando la mesa
 
 			 admiDao.cargarMesa(mesa);
@@ -707,11 +710,11 @@ IAdmiDeRestauranteDao admiDao= new AdmiDeRestauranteDaoImp();
 		List<Mesa> mesas2 = new ArrayList<Mesa>();
 
 		for (int i = 0; i < 10; i++) {// agregando 10 mesas a la lista
-			Mesa mesa = new Mesa();// creando una mesa
-			mesa.setEstado("desocupada");
-			mesa.setSalon(salon2);
-			mesa.setReserva(null);
-			mesa.setComensalesSentados(0);
+			Mesa mesa = new Mesa(0,"desocupado",salon2,null);// creando una mesa
+//			mesa.setEstado("desocupada");
+//			mesa.setSalon(salon2);
+//			mesa.setReserva(null);
+//			mesa.setComensalesSentados(0);
 			mesas2.add(mesa);// agregando la mesa
 	    admiDao.cargarMesa(mesa);
 

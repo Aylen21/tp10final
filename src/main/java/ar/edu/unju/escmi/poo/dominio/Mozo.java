@@ -3,6 +3,7 @@ package ar.edu.unju.escmi.poo.dominio;
 
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -25,6 +26,7 @@ public class Mozo {
 	private String email;
 	private long telefono;
 	@OneToMany(mappedBy="mozo")
+//	@Column(length=99999)
 	private List<Reserva> reservas;
 	
 	public Long getId() {

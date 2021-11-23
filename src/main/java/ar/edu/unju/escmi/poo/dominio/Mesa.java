@@ -1,5 +1,6 @@
 package ar.edu.unju.escmi.poo.dominio;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -65,12 +66,13 @@ public class Mesa {
 
 	}
 
-	public Mesa(String estado) {
+	public Mesa(int comensalesSentados, String estado, Salon salon, Reserva reserva) {
 		super();
+		this.comensalesSentados = comensalesSentados;
 		Estado = estado;
+		this.salon = salon;
+		this.reserva = reserva;
 	}
-
-
 
 	public int getComensalesSentados() {
 		return comensalesSentados;
@@ -91,7 +93,7 @@ public class Mesa {
 	@Override
 	public String toString() {
 		return "Mesa [idMesa=" + idMesa + ", comensalesSentados=" + comensalesSentados + ", Estado=" + Estado
-				+ ", salon=" + salon + ", reserva=" + reserva + "]";
+				+ ", salon=" + salon +  "]";
 	}
 
 
