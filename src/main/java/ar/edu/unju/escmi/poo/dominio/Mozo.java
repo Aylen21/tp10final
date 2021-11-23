@@ -27,7 +27,6 @@ public class Mozo {
 	private String email;
 	private long telefono;
 	@OneToMany(mappedBy="mozo",cascade = {CascadeType.ALL})
-//	@Column(length=99999)
 	private List<Reserva> reservas;
 	
 	public Long getId() {

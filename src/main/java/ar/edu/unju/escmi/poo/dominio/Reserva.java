@@ -26,14 +26,13 @@ public class Reserva {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long idR;
-	@OneToOne(cascade= {CascadeType.ALL})
+	@OneToOne/*(cascade= {CascadeType.ALL})*/
 	@JoinColumn(name = "id")
 	private Persona cliente;
 	@ManyToOne
 	@JoinColumn(name = "idM")
 	private Mozo mozo;
 	@OneToMany(mappedBy="reserva")
-//	@Column(length=99999)
 	private List<Mesa> mesa;
 	private int cantidadComensales;
 	private LocalDate fechaR;
