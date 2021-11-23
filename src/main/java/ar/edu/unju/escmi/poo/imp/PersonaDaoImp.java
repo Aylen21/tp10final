@@ -73,7 +73,7 @@ public class PersonaDaoImp implements IPersonaDao {
 	@Override
 	public List<ClienteP> obtenerClientesParticulares() {
 		@SuppressWarnings("unchecked")
-		List<ClienteP> clientesParticulares = (List<ClienteP>) manager.createQuery("SELECT e FROM Persona WHERE e.tipo like 'Particular'").getResultList();
+		List<ClienteP> clientesParticulares = (List<ClienteP>) manager.createQuery("SELECT e FROM Persona e WHERE tipo like 'Particular'").getResultList();
 		return clientesParticulares;
 
 	}

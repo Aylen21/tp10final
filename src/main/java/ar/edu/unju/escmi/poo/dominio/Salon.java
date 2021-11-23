@@ -58,7 +58,7 @@ public class Salon {
 
 	@Override
 	public String toString() {
-		return "Salon [nroDeSalon=" + nroDeSalon + ", capacidadMesas=" + capacidadMesas + ", mesas=" + mesas + "]";
+		return "Salon [nroDeSalon=" + nroDeSalon + ", capacidadMesas=" + capacidadMesas +  "]";
 	}
 
 	public Salon(int nroDeSalon, int capacidadMesas, List<Mesa> mesas) {

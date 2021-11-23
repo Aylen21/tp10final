@@ -5,6 +5,7 @@ import java.time.LocalTime;
 import java.util.List;
 import java.util.Set;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -31,6 +32,7 @@ public class Reserva {
 	@JoinColumn(name = "idM")
 	private Mozo mozo;
 	@OneToMany(mappedBy="reserva")
+//	@Column(length=99999)
 	private List<Mesa> mesa;
 	private int cantidadComensales;
 	private LocalDate fechaR;
