@@ -26,7 +26,7 @@ public class Mesa {
 	@JoinColumn(name = "nroDeSalon")//dueño de relación
 	private Salon salon;
 	
-	@ManyToOne//(cascade = {CascadeType.ALL})
+	@ManyToOne(cascade = {CascadeType.ALL})
 	@JoinColumn(name = "idR")
 	private Reserva reserva;
 

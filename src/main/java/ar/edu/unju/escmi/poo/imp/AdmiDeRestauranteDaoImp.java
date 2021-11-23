@@ -37,6 +37,7 @@ public class AdmiDeRestauranteDaoImp implements IAdmiDeRestauranteDao {
 
 	@Override
 	public void darAltaReserva(Reserva reserva) {
+		System.out.println("Haciendo alta mmmmmmmmmmm");
 		manager.getTransaction().begin();
 		manager.persist(reserva);
 		manager.getTransaction().commit();
@@ -137,51 +138,16 @@ public class AdmiDeRestauranteDaoImp implements IAdmiDeRestauranteDao {
 	}
 
 	@Override
-	public void cambiarEstado(Long id, String estado, int c, Reserva reserva, int p) {
+	public void cambiarEstado(Mesa mesa) {
 		// TODO Auto-generated method stub
-		System.out.println("Entrando a cambiar estado");
-		IAdmiDeRestauranteDao admiDao = new AdmiDeRestauranteDaoImp();
-//		
-		@SuppressWarnings("unchecked")
-		List<Mesa> mesas = (List<Mesa>) manager.createQuery("SELECT e FROM Mesa e").getResultList();
-		for (int a = 0; a < mesas.size(); a++) {
-
-		System.out.println("casi muriendo");
-
-			if (mesas.get(a).getIdMesa() == id) {
-				System.out.println("estado antes: " + mesas.get(a));
-				mesas.get(a).setEstado(estado);
-				mesas.get(a).setReserva(reserva);
-				System.out.println("estado despues: " + mesas.get(a));
-
-				if (c % 4 == 0) {
-//					/cantidadComensales=4/
-					mesas.get(a).setComensalesSentados(4);
-					System.out.println("1");
-				} else {
-					if (admiDao.calcularMesasNecesarias(c) - p == 1) {
-//						/cantidad comensales=c%4/
-						mesas.get(a).setComensalesSentados(c % 4);
-						System.out.println("2");
-					} else {
-//						/cantidadComensales=4/
-						mesas.get(a).setComensalesSentados(4);
-						System.out.println("3");
-					}
-				}
-				System.out.println("guardando");
-				Mesa mes = new Mesa();
-				mes = mesas.get(a);
-				System.out.println("guardando mes: " + mes);
-
+		
 				manager.getTransaction().begin();
-				manager.merge(mes);
+				manager.merge(mesa);
 				manager.getTransaction().commit();
-				System.out.println("guardado: ->" + mesas.get(a));
 			}
-		}
+		
 
-	}
+	
 
 //	@Override
 //	public void asignarMozo(Reserva reserva) {
@@ -222,7 +188,7 @@ public class AdmiDeRestauranteDaoImp implements IAdmiDeRestauranteDao {
 		// TODO Auto-generated method stub
 		salon.setMesas(mesas);
 		manager.getTransaction().begin();
-		manager.merge(salon);
+		manager.persist(salon);
 		manager.getTransaction().commit();
 	}
 

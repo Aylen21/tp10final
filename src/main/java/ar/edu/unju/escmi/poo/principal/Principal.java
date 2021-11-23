@@ -10,6 +10,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
+import org.hibernate.internal.build.AllowSysOut;
+
 import ar.edu.unju.escmi.poo.dao.IAdmiDeRestauranteDao;
 import ar.edu.unju.escmi.poo.dao.IMozoDao;
 import ar.edu.unju.escmi.poo.dao.IPersonaDao;
@@ -467,6 +469,7 @@ public class Principal {
 	public static Reserva pedirDatos(Persona cliente) {
 		Reserva reserva1 = new Reserva();
 		Scanner sc = new Scanner(System.in);
+		List<Mesa> mesasAux = new ArrayList<Mesa>();
 		LocalTime hora, limiteInferior;
 		IAdmiDeRestauranteDao admiDao = new AdmiDeRestauranteDaoImp();
 		IMozoDao mozoDao = new MozoDaoImp();
@@ -597,34 +600,58 @@ public class Principal {
 					break;
 				}
 			}
-//			/Guardado de mesas/
-			int pM=-1;
+//			/Guardado de mozo/
+			int pM = -1;
 			List<Mozo> mozos = mozoDao.obtenerMozos();
 			for (int i = 0; i < mozos.size(); i++) {
-				if(mozos.get(i).getReservas()==null) {
-					pM=i;
-				}
-				else if (mozos.get(i).getReservas().size() < 4) {
-					 pM = i;
+				if (mozos.get(i).getReservas() == null) {
+					pM = i;
+				} else if (mozos.get(i).getReservas().size() < 4) {
+					pM = i;
 				}
 			}
-		
 
 			reserva1.setMozo(mozos.get(pM));
 			System.out.println("3-Salon seleccionado= " + salonSeleccionado);
-		
+			Reserva reserAux = reserva1;
 			if (salonSeleccionado > 0) {
 				if (salonSeleccionado == 1) {
+					List<Mesa> mesas = admiDao.obtenerMesasSalon1();
 					for (int p = 0; p < admiDao.calcularMesasNecesarias(c); p++) {
 						String e = "ocupada";
-						
+
 						if (admiDao.obtenerMesasSalon1().get(p).getEstado().equals(estado)) {
 //							/Recorre y Compara id del de la lista con el de la tabla y cambia el estado/
 
 //							/cambiar estado a ocupado/
-							admiDao.cambiarEstado(admiDao.obtenerMesasSalon1().get(p).getIdMesa(), e, c, reserva1, p);
-//							admiDao.asignarMozo(reserva1);
+
+							System.out.println("estado antes: " + mesas.get(p));
+							mesas.get(p).setEstado(e);
+							System.out.println("estado despues: " + mesas.get(p));
+
+							if (c % 4 == 0) {
+//					/cantidadComensales=4/
+								mesas.get(p).setComensalesSentados(4);
+								System.out.println("1");
+							} else {
+								if (admiDao.calcularMesasNecesarias(c) - p == 1) {
+//						/cantidad comensales=c%4/
+									mesas.get(p).setComensalesSentados(c % 4);
+									System.out.println("2");
+								} else {
+//						/cantidadComensales=4/
+									mesas.get(p).setComensalesSentados(4);
+									System.out.println("3");
+								}
+							}
+							System.out.println("guardando");
+							Mesa mes = new Mesa();
+							mes = mesas.get(p);
 							
+							mesasAux.add(p, mes);
+							//admiDao.cambiarEstado(mes);
+//							admiDao.asignarMozo(reserva1);
+
 //							reserva1.setMozo(mozo1);
 //							/cambiar la reserva a la que corresponde/
 //							
@@ -633,34 +660,49 @@ public class Principal {
 						}
 
 					}
-					
+
 					conformidad = false;
 				} else if (salonSeleccionado == 2) {
-
+					List<Mesa> mesas = admiDao.obtenerMesasSalon2();
 					for (int p = 0; p < admiDao.calcularMesasNecesarias(c); p++) {
 						String e = "ocupada";
-						
-						if (admiDao.obtenerMesasSalon2().get(p).getEstado().equals(estado)) {
-							/*
-							 * /Recorre y Compara id del de la lista con el de la tabla y cambia el estado
-							 */
-							admiDao.cambiarEstado(admiDao.obtenerMesasSalon2().get(p).getIdMesa(), e, c, reserva1, p);
-//							admiDao.asignarMozo(reserva1);
-							
-//							/cambiar estado a ocupado/
-//							/cambiar id de reserva a la que corresponde/
-//							/determinar mozo/*/
 
-							/* determinando cantidad comensales por mesa */
+						if (admiDao.obtenerMesasSalon2().get(p).getEstado().equals(estado)) {
+							System.out.println("estado antes: " + mesas.get(p));
+							mesas.get(p).setEstado(e);
+							mesas.get(p).setReserva(reserAux);
+							System.out.println("estado despues: " + mesas.get(p));
+
+							if (c % 4 == 0) {
+//					/cantidadComensales=4/
+								mesas.get(p).setComensalesSentados(4);
+								System.out.println("1");
+							} else {
+								if (admiDao.calcularMesasNecesarias(c) - p == 1) {
+//						/cantidad comensales=c%4/
+									mesas.get(p).setComensalesSentados(c % 4);
+									System.out.println("2");
+								} else {
+//						/cantidadComensales=4/
+									mesas.get(p).setComensalesSentados(4);
+									System.out.println("3");
+								}
+							}
+							System.out.println("guardando");
+							Mesa mes = new Mesa();
+							mes = mesas.get(p);
+							mesasAux.add(p, mes);
+							//admiDao.cambiarEstado(mes);
 
 						}
 					}
-				
+
 					conformidad = false;
 				}
 			}
 
 		} while (conformidad == true);
+		reserva1.setMesa(mesasAux);
 
 		return reserva1;
 	}
