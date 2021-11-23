@@ -236,6 +236,7 @@ public class AdmiDeRestauranteDaoImp implements IAdmiDeRestauranteDao {
 
 				if (mesas.get(i).getEstado().equals("ocupada")) {
 					mesas.get(i).setEstado("desocupada");
+					mesas.get(i).setComensalesSentados(0);
 					manager.getTransaction().begin();
 					manager.merge(mesas.get(i));
 					manager.getTransaction().commit();
@@ -257,5 +258,20 @@ public class AdmiDeRestauranteDaoImp implements IAdmiDeRestauranteDao {
 		}
 		return reservas;
 	}
+	@Override
+	public void cambiarMozo(int id) {
+			// TODO Auto-generated method stub
+			@SuppressWarnings("unchecked") List<Reserva> reservas= (List<Reserva>)
+					manager.createQuery("SELECT e FROM Reserva e").getResultList();
+			for(int i=0;i<reservas.size();i++) {
+				if(reservas.get(i).getIdR()==id) {
+					reservas.get(i).setMozo(null);
+					manager.getTransaction().begin();
+					manager.merge(reservas.get(i));
+					manager.getTransaction().commit();
+				}
+			}
+			
+		}
 
 }

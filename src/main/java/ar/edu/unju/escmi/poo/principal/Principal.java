@@ -434,6 +434,7 @@ public class Principal {
 					admiDao.liberarCantMesas(cantidadM, numSalon1);
 					idCorrecto=true;
 					System.out.println(" Nuevo total asignado con exito");
+					admiDao.cambiarMozo(idReserva);
 				}else {
 					System.out.println(" id no registrado, intente de nuevo");
 				}				
