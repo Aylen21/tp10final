@@ -1,18 +1,20 @@
 package ar.edu.unju.escmi.poo.dominio;
 
 
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 
 @Entity
 @Table(name = "Mozos")
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 public class Mozo {
 
 	@Id
@@ -22,12 +24,15 @@ public class Mozo {
 	private String nombre;
 	private String email;
 	private long telefono;
+	@OneToMany(mappedBy="mozo")
+	private List<Reserva> reservas;
+	
 	public Long getId() {
 		return id;
 	}
-	public void setId(Long id) {
-		this.id = id;
-	}
+//	public void setId(Long id) {
+//		this.id = id;
+//	}
 	public long getDniM() {
 		return dniM;
 	}
@@ -55,18 +60,26 @@ public class Mozo {
 	public Mozo() {
 		
 	}
-	public Mozo(long dniM, String nombre, String email, long telefono) {
+	public List<Reserva> getReservas() {
+		return reservas;
+	}
+	public void setReservas(List<Reserva> reservas) {
+		this.reservas = reservas;
+	}
+	public Mozo( long dniM, String nombre, String email, long telefono, List<Reserva> reservas) {
 		super();
 		this.dniM = dniM;
 		this.nombre = nombre;
 		this.email = email;
 		this.telefono = telefono;
+		this.reservas = reservas;
 	}
 	@Override
 	public String toString() {
 		return "Mozo [id=" + id + ", dniM=" + dniM + ", nombre=" + nombre + ", email=" + email + ", telefono="
-				+ telefono + "]";
+				+ telefono + ", reservas=" + reservas + "]";
 	}
+
 	
 	
 	

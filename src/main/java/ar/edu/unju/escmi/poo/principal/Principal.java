@@ -27,8 +27,8 @@ import ar.edu.unju.escmi.poo.imp.PersonaDaoImp;
 import ar.edu.unju.escmi.poo.util.FechaUtil;
 
 public class Principal {
-	public static EntityManagerFactory emf;
-	public static EntityManager manager;
+//	public static EntityManagerFactory emf;
+//	public static EntityManager manager;
 
 	public static void main(String[] args) throws Exception {
 		// comentario
@@ -36,8 +36,8 @@ public class Principal {
 		IPersonaDao persDao = new PersonaDaoImp();
 		IMozoDao mozoDao = new MozoDaoImp();
 		IAdmiDeRestauranteDao admiDao = new AdmiDeRestauranteDaoImp();
-		emf = Persistence.createEntityManagerFactory("TestPersistence");
-		manager = emf.createEntityManager();
+//		emf = Persistence.createEntityManagerFactory("TestPersistence");
+//		manager = emf.createEntityManager();
 
 		AdminDeRestaurante administrador = new AdminDeRestaurante("jjuan", "12345");
 		Scanner sc = new Scanner(System.in);
@@ -46,60 +46,71 @@ public class Principal {
 
 		
 
-		if(admiDao.salonesMesasCargados()==false) {
+//		if(admiDao.salonesMesasCargados()==false) {
 			List<Mesa> mesas1 = new ArrayList<Mesa>(); // creando mesas
 			List<Mesa> mesas2 = new ArrayList<Mesa>();
 
-			Salon salon1 = new Salon(1, 20, mesas1);
-			Salon salon2 = new Salon(2, 10, mesas2);
-			
-			manager.getTransaction().begin();
-//			salon1.setMesas(mesas1);
-			manager.persist(salon1);
-			manager.getTransaction().commit();
-			
-			manager.getTransaction().begin();
-//			salon2.setMesas(mesas2);
-			manager.persist(salon2);
-			manager.getTransaction().commit();
+//			Salon salon1 = new Salon(1, 20, mesas1);
+//			Salon salon2 = new Salon(2, 10, mesas2);
+		Salon salon1 = new Salon(1, 20,  mesas1);
+		Salon salon2 = new Salon(2, 10, mesas2);
+			admiDao.guardarSalon(salon2);
+			admiDao.guardarSalon(salon1);
+		
+
 			
 			mesas1=cargarMesas1(salon1);//cargando mesas
 			mesas2=cargarMesas2(salon2);
-		  
-		  ClienteP clienteP1 = new ClienteP("Juan","Juarez",123,456);
+			admiDao.cargarMesas1(mesas1,salon1);
+			admiDao.cargarMesas2(mesas2,salon2);
+//		  
+//		  ClienteP clienteP1 = new ClienteP("Juan","Juarez",123,456);
+//		  manager.getTransaction().begin(); 
+//		  manager.persist(clienteP1);
+//		  manager.getTransaction().commit();
+		  //
+	/*	  
+		  for (int k=0;k<mesas1.size();k++) { 
+			  mesas1.get(k).setSalon(salon1);
 		  manager.getTransaction().begin(); 
-		  manager.persist(clienteP1);
-		  manager.getTransaction().commit();
-		}
-
+		  manager.merge(mesas1.get(k));
+		  manager.getTransaction().commit(); }
+		  
+		  for (int j=0;j<mesas2.size();j++) {
+		  mesas1.get(j).setSalon(salon2); 
+		  manager.getTransaction().begin();
+		  manager.merge(mesas2.get(j));
+		  manager.getTransaction().commit(); }
+		 
+//		}
 		//si la bd no tiene ningún mozo, va a agregar 3 por defecto
 		if(mozoDao.mozosEnBd()==false) {
 			System.out.println(" Cargando mozos por defecto");
 			//Precarga de mozos 
 
-			Mozo mozo = new  Mozo(2002,"Sebastian","seba@gmail.com",12345); 
+			Mozo mozo = new  Mozo(2002,"Sebastian","seba@gmail.com",12345,null); 
 			mozoDao.darDeAltaMozo(mozo);
-			Mozo mozo2 = new Mozo(2003,"Hector","tor@gmail.com",5311);
+			Mozo mozo2 = new Mozo(2003,"Hector","tor@gmail.com",5311,null);
 			mozoDao.darDeAltaMozo(mozo2); 
-			Mozo mozo3 = new Mozo(2004,"Julian","flo@gmail.com",82125); 
+			Mozo mozo3 = new Mozo(2004,"Julian","flo@gmail.com",82125,null); 
 			mozoDao.darDeAltaMozo(mozo3);
 			
 		}
-		
-		// cargando salon en las mesas
-		/*
-		 * for (int k=0;k<mesas1.size();k++) { mesas1.get(k).setSalon(salon1);
-		 * manager.getTransaction().begin(); manager.persist(mesas1.get(k));
-		 * manager.getTransaction().commit(); } for (int j=0;j<mesas2.size();j++) {
-		 * mesas1.get(j).setSalon(salon2); manager.getTransaction().begin();
-		 * manager.persist(mesas2.get(j)); manager.getTransaction().commit(); }
-		 *
-		 *
-		 * 
-		 * 
+		manager.getTransaction().begin();
+		admiDao.traerUnaReserva(1).setTotal(20);
+		manager.getTransaction().commit();
 		 */
+		
 
-		/* Registro de el unico usuario administrador */
+		// cargando salon en las mesas
+		
+
+		
+
+
+		
+		
+		
 		while (ingreso == false) {
 			System.out.println("-----Inicio de sesion-----");
 			System.out.println("Nombre de usuario:");
@@ -192,15 +203,44 @@ public class Principal {
 				mozoDao.listarMozos();
 
 				break;
-			case 3:
-				// falta :c
-				System.out.println("Ingrese numero de salon");
-				int numSalon = sc.nextInt();// debe ser 1 o 2
-				admiDao.consultarMesas(numSalon);
-
-				// ahora devuelve cuantas mesas tiene disponible el salon
-
+			case 3://caso tres
+//
+				System.out.println(" Consultar disponibilidad de mesas según salón.");
+				System.out.println("Ingrese el numero de  Salon (1) o (2)");
+				int numSalon=sc.nextInt();
+				String estado="desocupada"; 
+				int cont = 0;
+				if (numSalon == 1) {
+					for(int m = 0; m< admiDao.obtenerMesasSalon1().size();m++)
+					{
+						if (admiDao.obtenerMesasSalon1().get(m).getEstado().equals(estado)){
+							cont = cont+1;
+							
+						}	
+					}	
+					System.out.println("El numero de mesas desocupadas en el Salon 1 es de"+cont+"/20");
+					
+				}else
+				{
+					
+					if (numSalon == 2) {
+						for(int m = 0; m< admiDao.obtenerMesasSalon2().size();m++)
+						{
+							if (admiDao.obtenerMesasSalon2().get(m).getEstado().equals(estado)){
+						cont= cont +1;
+					}
+						}
+						System.out.println("El numero de mesas desocupadas en el Salon 2 es de"+cont+"/10");
+				}
+				
+				}
+			
+			
+				
+				//ahora deviulve cuantas mesas tiene disponible el salon
+				
 				break;
+				//
 
 			case 4:
 				// falta :C
@@ -453,27 +493,19 @@ public class Principal {
 		Reserva reserva1 = new Reserva();
 		Scanner sc = new Scanner(System.in);
 		LocalTime hora, limiteInferior;
+		IAdmiDeRestauranteDao admiDao = new AdmiDeRestauranteDaoImp();
 		String jlimite = "11:00";
 		limiteInferior = FechaUtil.convertirStringLocalTime(jlimite);
 		System.out.println(" Creando reserva... ");
 
 		boolean band1 = true, band2 = true, band3 = true, band4 = true, band5 = true;
 
-		do {// intentando guardar cantidad de comensales
-			System.out.println("Ingrese cantidad de comensales");
-			String tel1 = sc.next();
-			try {
-
-				reserva1.setCantidadComensales(Integer.valueOf(tel1));
-				band1 = false;
-
-			} catch (NumberFormatException ex) {
-				System.out.println("Debe ingresar obligatoriamente dato de tipo numerico.");
-
-			}
-
-		} while (band1 == true);
-
+		boolean conformidad=true;
+		boolean band7;
+		band7 = true;
+		String estado="desocupada";
+		int c=0;
+		
 		do {
 
 			System.out.println(" Ingrese fecha de reserva [dd/MM/yyyy]:");// try catch
@@ -512,42 +544,176 @@ public class Principal {
 			}
 		} while (band3 == true);
 
+		
+		
 		reserva1.setCliente(cliente);// si da error revisar this
-//		reserva1.setMozo(mozo1);
-//		reserva1.setMesa(mesas2);//guardar la lista de mesas
+
+		do {
+//			/bucle del try catch de numero/
+		do {
+			System.out.println(" Ingrese la cantidad de comensales ");
+			c = sc.nextInt();
+		try {
+			
+			reserva1.setCantidadComensales(Integer.valueOf(c));
+			band7 = false;
+
+		} catch (NumberFormatException ex) {
+			System.out.println("Debe ingresar obligatoriamente un numero entero.");
+
+		}
+
+		}while (band7 == true);
+
+		
+//		/Metodos para determinar las mesas disponibles por salon/
+		
+		int contMesas1=0;
+		for(int p = 0; p< admiDao.obtenerMesasSalon1().size();p++)
+		{
+			if (admiDao.obtenerMesasSalon1().get(p).getEstado().equals(estado)){
+				contMesas1 = contMesas1+1;
+				
+			}
+		}
+		int contMesas2=0;
+		for(int q = 0; q< admiDao.obtenerMesasSalon2().size();q++)
+		{
+			if (admiDao.obtenerMesasSalon1().get(q).getEstado().equals(estado)){
+				contMesas2 = contMesas2+1;
+				
+			}
+			
+		}
+//		/Comparamos cantidades con ambos salones y elegimos/
+		
+		int salonSeleccionado=0;
+		
+		if(admiDao.calcularMesasNecesarias(c)<=contMesas1 && admiDao.calcularMesasNecesarias(c)<=contMesas2) {
+			System.out.println("Disponibilidad en ambos salones, elija cual prefiere?(1/2)");
+			int op1=sc.nextInt();
+			switch(op1) {
+			case 1:
+				System.out.println("Salon 1 Seleccionado");
+				salonSeleccionado=1;
+				break;
+			case 2:
+				System.out.println("Salon 2 Seleccionado");
+				salonSeleccionado=2;
+				break;
+			}
+		}
+		else if(admiDao.calcularMesasNecesarias(c)<=contMesas1) {
+			System.out.println("Salon 1 unicamente disponible");
+			salonSeleccionado=1;
+		}
+		else if(admiDao.calcularMesasNecesarias(c)<=contMesas2) {
+			System.out.println("Salon 2 unicamente disponible");
+			salonSeleccionado=2;
+		}
+		else {
+//			/Cantidad superior se pregunta si quiere rehacer la solicitud o no hacer la reserva/
+			System.out.println("Cantidad superior al maximo disponible en ambos salones, ¿Desea volver a intentarlo?(S/N)");
+			String op=sc.next();
+			switch(op) {
+			case "S":
+				System.out.println("Recuperando información");
+				break;
+			case "N":
+				System.out.println("Reserva Cancelada");
+				conformidad=false;
+				break;
+			}
+			
+//			/Guardado de mesas/
+			if(salonSeleccionado>0) {
+				if(salonSeleccionado==1) {
+					for(int p = 0; p<admiDao.calcularMesasNecesarias(c)  ;p++)
+					{
+						if (admiDao.obtenerMesasSalon1().get(p).getEstado().equals(estado)){
+//							/Recorre y Compara id del de la lista con el de la tabla y cambia el estado/
+							
+//							/cambiar estado a ocupado/
+							admiDao.cambiarEstado(admiDao.obtenerMesasSalon1().get(p),"ocupado",c,reserva1,p);
+							admiDao.asignarMozo(reserva1);
+//							reserva1.setMozo(mozo1);
+//							/cambiar la reserva a la que corresponde/
+//							
+//							/determinando cantidad comensales por mesa/
+
+						}
+						
+					}
+				}
+				else if(salonSeleccionado==2) {
+					for(int p = 0; p<admiDao.calcularMesasNecesarias(c)  ;p++)
+					{
+						if (admiDao.obtenerMesasSalon2().get(p).getEstado().equals(estado)){
+							/*/Recorre y Compara id del de la lista con el de la tabla y cambia el estado*/
+							admiDao.cambiarEstado(admiDao.obtenerMesasSalon1().get(p),"ocupado",c,reserva1,p);
+							admiDao.asignarMozo(reserva1);
+//							reserva1.setMozo(mozo1);
+//							/cambiar estado a ocupado/
+//							/cambiar id de reserva a la que corresponde/
+//							/determinar mozo/*/
+							
+							/*determinando cantidad comensales por mesa*/
+							if(c%4==0) {
+								/*cantidadComensales=4*/
+							}
+							else {
+								if(admiDao.calcularMesasNecesarias(c)-p==1) {
+									/*cantidad comensales=c%4*/
+								}
+								else {
+									/*cantidadComensales=4*/
+								}
+							
+						}
+						
+					}
+				}
+				conformidad=false;
+			}
+		}
+		
+		}
+		}while(conformidad!=true);
+
 
 		return reserva1;
 	}
 
 	public static List<Mesa> cargarMesas1(Salon salon1) {
-
+		IAdmiDeRestauranteDao admiDao= new AdmiDeRestauranteDaoImp();
 		List<Mesa> mesas1 = new ArrayList<Mesa>();
 
 		for (int i = 0; i < 20; i++) {// agregando 20 mesas a la lista
 			Mesa mesa = new Mesa();// creando una mesa
 			mesa.setEstado("desocupada");
 			mesa.setSalon(salon1);
+			mesa.setReserva(null);
+			mesa.setComensalesSentados(0);
 			mesas1.add(mesa);// agregando la mesa
-			manager.getTransaction().begin();
-			manager.persist(mesa);
-			manager.getTransaction().commit();
+
+			 admiDao.cargarMesa(mesa);
 
 		}
 		return mesas1;
 	}
 
 	public static List<Mesa> cargarMesas2(Salon salon2) {
-
+IAdmiDeRestauranteDao admiDao= new AdmiDeRestauranteDaoImp();
 		List<Mesa> mesas2 = new ArrayList<Mesa>();
 
 		for (int i = 0; i < 10; i++) {// agregando 10 mesas a la lista
 			Mesa mesa = new Mesa();// creando una mesa
 			mesa.setEstado("desocupada");
 			mesa.setSalon(salon2);
+			mesa.setReserva(null);
+			mesa.setComensalesSentados(0);
 			mesas2.add(mesa);// agregando la mesa
-			manager.getTransaction().begin();
-			manager.persist(mesa);
-			manager.getTransaction().commit();
+	    admiDao.cargarMesa(mesa);
 
 		}
 		return mesas2;
