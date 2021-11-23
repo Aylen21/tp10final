@@ -26,7 +26,7 @@ public class Reserva {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long idR;
-	@OneToOne(cascade= {CascadeType.ALL})
+	@OneToOne/*(cascade= {CascadeType.ALL})*/
 	@JoinColumn(name = "id")
 	private Persona cliente;
 	@ManyToOne
