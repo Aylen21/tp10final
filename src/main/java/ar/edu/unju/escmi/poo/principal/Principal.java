@@ -31,7 +31,7 @@ import ar.edu.unju.escmi.poo.util.FechaUtil;
 public class Principal {
 
 	public static void main(String[] args) throws Exception {
-		// variables necesarias
+
 		boolean confirmacionSalida = false;
 		IPersonaDao persDao = new PersonaDaoImp();
 		IMozoDao mozoDao = new MozoDaoImp();
@@ -245,7 +245,7 @@ public class Principal {
 						if (cuitC == persDao.obtenerClientesAgenciaDeTurismo().get(i).getCuit()) {
 							System.out.println("Cliente Encontrado");
 							encontrado = true;
-							
+
 							admiDao.darAltaReserva(pedirDatos(persDao.obtenerClientesAgenciaDeTurismo().get(i)));
 						}
 					}
@@ -254,7 +254,6 @@ public class Principal {
 
 						System.out.println("Ingrese los datos del cliente para hacer la reserva:");
 						ClienteAT clienteA1 = new ClienteAT();
-//					System.out.println("Ingrese CUIT del clienteAT"); ya se lo ingresó
 						clienteA1.setCuit(cuitC);
 						System.out.println("Ingrese nombre de clienteAT");
 						clienteA1.setNombre(sc.next());
@@ -281,7 +280,6 @@ public class Principal {
 						System.out.println("ClienteAT cargado exitosamente");
 						// ahora, creando reserva:
 
-//					
 						admiDao.darAltaReserva(pedirDatos(clienteA1));
 						//
 
@@ -312,9 +310,6 @@ public class Principal {
 								System.out.println("Cliente Encontrado");
 								encontrado = true;
 								// creando reserva para el cliente P
-//							reserva1.setCliente(persDao.obtenerClientesParticulares().get(i));no use
-//           				reserva1.setMozo(mozo1);
-//           				reserva1.setMesa(mesas2);//guardar la lista de mesas
 								admiDao.darAltaReserva(pedirDatos(persDao.obtenerClientesParticulares().get(i)));
 
 							}
@@ -324,7 +319,6 @@ public class Principal {
 							System.out.println("El cliente particular no existe");
 							System.out.println("Ingrese los datos del cliente para hacer la reserva:");
 							ClienteP clienteP = new ClienteP();
-//					System.out.println("Ingrese DNI del clienteP"); ya ingresado
 							clienteP.setDni(dni);
 							System.out.println("Ingrse nombre de clienteP");
 							clienteP.setNombre(sc.next());
