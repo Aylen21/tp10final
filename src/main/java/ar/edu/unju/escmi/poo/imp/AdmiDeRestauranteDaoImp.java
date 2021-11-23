@@ -130,32 +130,37 @@ if(reservas.get(i).getIdR()==id) {
 		return mesasParaReserv;
 	}
 	@Override
-	public void cambiarEstado(Mesa mesa, String estado, int c, Reserva reserva, int p) {
+	public void cambiarEstado(Long id, String estado, int c, Reserva reserva, int p) {
 		// TODO Auto-generated method stub
 		IAdmiDeRestauranteDao admiDao= new AdmiDeRestauranteDaoImp();
-		mesa.setEstado(estado);
-		mesa.setReserva(reserva);
-		if(c%4==0) {
-//			/cantidadComensales=4/
-			mesa.setComensalesSentados(4);
-		}
-		else {
-			if(admiDao.calcularMesasNecesarias(c)-p==1) {
-//				/cantidad comensales=c%4/
-				mesa.setComensalesSentados(c%4);
+//		
+		@SuppressWarnings("unchecked")
+		List<Mesa> mesas= (List<Mesa>) manager.createQuery("SELECT e FROM Mesa ").getResultList();
+		for(int a=0;a<mesas.size();a++) {
+			if(mesas.get(a).getIdMesa()==id) {
+				mesas.get(a).setEstado(estado);
+				mesas.get(a).setReserva(reserva);
+				
+				if(c%4==0) {
+//					/cantidadComensales=4/
+					mesas.get(a).setComensalesSentados(4);
+				}
+				else {
+					if(admiDao.calcularMesasNecesarias(c)-p==1) {
+//						/cantidad comensales=c%4/
+						mesas.get(a).setComensalesSentados(c%4);
+					}
+					else {
+//						/cantidadComensales=4/
+						mesas.get(a).setComensalesSentados(4);
+					}
+				}
+				manager.getTransaction().begin();
+				manager.merge(mesas.get(a));
+				manager.getTransaction().commit();
 			}
-			else {
-//				/cantidadComensales=4/
-				mesa.setComensalesSentados(4);
-			}
 		}
-		
-		
-		
-		
-		manager.getTransaction().begin();
-		manager.merge(mesa);
-		manager.getTransaction().commit();
+
 		
 	}
 	
