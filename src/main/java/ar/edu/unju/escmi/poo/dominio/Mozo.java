@@ -22,10 +22,10 @@ public class Mozo {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	private long dniM;
+	private Long dniM;
 	private String nombre;
 	private String email;
-	private long telefono;
+	private Long telefono;
 	@OneToMany(mappedBy="mozo",cascade = {CascadeType.ALL})
 	private List<Reserva> reservas;
 	
