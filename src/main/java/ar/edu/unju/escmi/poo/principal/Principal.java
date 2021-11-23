@@ -219,7 +219,10 @@ public class Principal {
 			//
 
 			case 4:
-				// falta :C
+//				"4 - Consultar mesas ocupadas mostrando la cantidad de comensales.\r
+				
+				admiDao.consultarMesasOcup();
+				
 				break;
 
 			case 5:
@@ -372,8 +375,63 @@ public class Principal {
 					}
 				}
 				break;
-			case 6:
-				// falta :c
+			case 6:				
+//				6 - Realizar la búsqueda de una reserva para modificar total a pagar (finaliza la reserva).\r\n"
+				boolean idCorrecto=false;
+				double totalNuevo;
+				do {
+			
+				
+				boolean band9=true;
+				int idReserva=0;
+				
+				do {	System.out.println("Ingrese id de reserva: ");
+						String intento=sc.next();	
+				try {
+
+						idReserva=Integer.valueOf(intento);
+						band9 = false;
+
+					} catch (NumberFormatException ex) {
+						System.out.println("Debe ingresar obligatoriamente un numero tipo Entero.");
+
+					}
+
+				} while (band9 == true);
+				
+				
+				
+				
+				if(admiDao.traerUnaReserva(idReserva)!=null) {
+					System.out.println("Reserva encontrada");
+					//si la reserva se encuentra en la bd, se procede a cambiar el total:
+					
+					totalNuevo=0;
+					
+					boolean band10=true;
+					do {System.out.println("Ingrese nuevo total: ");
+					String intento2=sc.next();
+						try {
+
+							totalNuevo=Double.valueOf(intento2);
+							band10 = false;
+
+						} catch (NumberFormatException ex) {
+							System.out.println("Debe ingresar obligatoriamente un numero tipo double.");
+
+						}
+
+					} while (band10 == true);
+					
+					
+					admiDao.cambiarTotal(idReserva, totalNuevo);
+					idCorrecto=true;
+					System.out.println(" Nuevo total asignado con exito");
+				}else {
+					System.out.println(" id no registrado, intente de nuevo");
+				}				
+				}while(idCorrecto==false);
+				System.out.println(" Proceso finalizado");
 				break;
 			case 7:
 				System.out.println("El cliente a buscar es de tipo agencia de turismo(A) o  particular:(P)");
