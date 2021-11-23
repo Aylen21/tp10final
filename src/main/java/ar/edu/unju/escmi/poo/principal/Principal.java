@@ -496,6 +496,9 @@ public class Principal {
 						String respuesta = sc.next();
 						if (respuesta.equals("S") || respuesta.equals("s")) {
 							System.out.println("Eliminando reserva.........");
+							int cantidadM=admiDao.traerUnaReserva(idR).getMesa().size();
+							int numSalon1=admiDao.traerUnaReserva(idR).getMesa().get(0).getSalon().getNroDeSalon();
+							admiDao.liberarCantMesas(cantidadM, numSalon1);
 							admiDao.eliminarReserva(admiDao.obtenerReservas().get(r));
 							System.out.println("Reserva eliminada");
 						} else {
